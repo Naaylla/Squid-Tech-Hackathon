@@ -6,6 +6,7 @@ const cors = require('cors')
 app.use(cors())
 
 const bodyParser = require('body-parser')
+const connexion = require('./utils/db')
 //
 app.use(bodyParser.json())
 //
@@ -46,7 +47,14 @@ app.use((req, res, next) => {
 
 
 // Connexion a la base de donnée
-
+connexion.connect((err) => {
+    if (err) {
+        console.log("Erreur de connection a la base de donnée");
+        return;
+    } else {
+        console.log("Connexion réussie à la base de données");
+    }
+});
 
 
 // Server mis à l'écoute
