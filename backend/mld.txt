@@ -43,6 +43,10 @@ ne pas ajouter d'utilisateur dans la table event_user
 // declencheur qui verifier le type de fichier afin d'eviter les attaques reverse shell et injection 
 de code malveillant
 //X declencheur pour verifier les données de l'impact
+//X fonction pour calcul de statistique de l'impact
 //X Fonction pour calculer le nombre de Commentaire d'une publication 
 //X Fonction pour calculer le nombre de Like d'une publication ou d'un commentaire 
 //X Fonction pour calculer le score de l'utlisateur d'apres les évenements
+//X optimisation du code en supprimant les controllers inutilisables 'utilisation du ON DELETE CASCADE sur mysql'
+//X ajout de la clause ON UPDATE 
+//X modification getter list d'amis afin de selectionner tout les listes d'amis et

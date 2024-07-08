@@ -198,6 +198,7 @@ CREATE TABLE EVENT_USER (
 ▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE ACTIVITE (
     id_activite INT PRIMARY KEY AUTO_INCREMENT,
+    heure_debut_activit time not null ,
     description_activite VARCHAR(255) NOT NULL
 );
 
@@ -322,14 +323,21 @@ END //
 
 ▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
-CREATE TRIGGER check_private_chat_size BEFORE INSERT ON CHAT_USER
+CREATE TRIGGER check_group_chat_size BEFORE INSERT ON CHAT_USER
 FOR EACH ROW
 BEGIN
     DECLARE participant_count INT;
+    DECLARE chat_type VARCHAR(6);
+    
+    -- Récupérer le type de la discussion à partir de la table CHAT
+    SELECT type_chat INTO chat_type FROM CHAT WHERE id_chat = NEW.id_chat;
+    
+    -- Compter le nombre de participants actuels dans la discussion
     SELECT COUNT(*) INTO participant_count FROM CHAT_USER WHERE id_chat = NEW.id_chat;
     
-    IF NEW.type_chat = 'priver' AND participant_count >= 2 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un chat privé ne peut pas avoir plus de 2 participants.';
+    -- Vérifier si le type de la discussion est 'groupe' et s'il y a déjà 15 participants
+    IF chat_type = 'groupe' AND participant_count >= 15 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un chat de groupe ne peut pas avoir plus de 15 participants.';
     END IF;
 END //
 
@@ -484,6 +492,33 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

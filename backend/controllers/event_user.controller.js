@@ -1,5 +1,6 @@
 const connexion = require("../utils/db");
 
+// Ajouter un utilisateur à un événement
 const add_event_user = async (req, res) => {
     const { id_event, id_user } = req.body;
     const sql = 'INSERT INTO EVENT_USER (id_event, id_user) VALUES (?, ?)';
@@ -13,7 +14,7 @@ const add_event_user = async (req, res) => {
     });
 };
 
-
+// Supprimer un utilisateur d'un événement
 const delete_event_user = async (req, res) => {
     const { id_event, id_user } = req.params;
     const sql = 'DELETE FROM EVENT_USER WHERE id_event = ? AND id_user = ?';
@@ -26,8 +27,7 @@ const delete_event_user = async (req, res) => {
     });
 };
 
-
-
+// Mettre à jour les détails d'un utilisateur dans un événement
 const update_event_user = async (req, res) => {
     const { id_event, id_user } = req.params;
     const { /* ajoutez ici les champs à mettre à jour si nécessaire */ } = req.body;
@@ -42,7 +42,7 @@ const update_event_user = async (req, res) => {
     });
 };
 
-
+// Obtenir tous les utilisateurs associés à tous les événements
 const get_all_event_user = async (req, res) => {
     const sql = 'SELECT * FROM EVENT_USER';
 
@@ -54,9 +54,9 @@ const get_all_event_user = async (req, res) => {
     });
 };
 
-
+// Obtenir un utilisateur spécifique dans un événement par son ID
 const get_event_user = async (req, res) => {
-    const { id_event, id_user } = req.params;
+    const { id_event } = req.params;
     const sql = 'SELECT * FROM EVENT_USER WHERE id_event = ? AND id_user = ?';
 
     connexion.query(sql, [id_event, id_user], (err, rows) => {
@@ -66,7 +66,6 @@ const get_event_user = async (req, res) => {
         res.status(200).json({ data: rows, message: "Sélectionné avec succès" });
     });
 };
-
 
 module.exports = {
     add_event_user,

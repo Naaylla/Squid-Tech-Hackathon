@@ -41,7 +41,7 @@ const update_message = async (req, res) => {
     });
 };
 
-// Obtenir tous les messages
+// Obtenir tous les messages d'utilisateurs
 const get_all_message = async (req, res) => {
     const sql = 'SELECT * FROM MESSAGE';
 
@@ -53,10 +53,10 @@ const get_all_message = async (req, res) => {
     });
 };
 
-// Obtenir un message par son ID
+// Obtenir les messages d'un utilisateurs par son ID
 const get_message = async (req, res) => {
     const { id } = req.params;
-    const sql = 'SELECT * FROM MESSAGE WHERE id_message = ?';
+    const sql = 'SELECT * FROM MESSAGE WHERE id_user = ?';
 
     connexion.query(sql, [id], (err, rows) => {
         if (err) {
