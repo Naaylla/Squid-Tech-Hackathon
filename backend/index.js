@@ -95,10 +95,10 @@ app.listen(process.env.PORT, (error) => {
  * id_id1 = premier mot apres 'router_' que l'on trouve dans les variables des endpoints
  * id_id2 = deuxiemme mot apres 'router_' que l'on trouve dans les variables des endpoints
  * 
- * /routes_principal/delete/id_id1/id_id2
- * /routes_principal/update/id_id1/id_id2
- * /routes_principal/id_id1
- * /routes_principal/add
+ * delete request ---- /routes_principal/delete/id_id1/id_id2
+ * update request ---- /routes_principal/update/id_id1/id_id2
+ * get request    ---- /routes_principal/id_id1
+ * post request   ----/routes_principal/add
  */
 
 
