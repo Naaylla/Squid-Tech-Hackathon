@@ -1,0 +1,410 @@
+,--------. ,---.  ,-----.  ,--.   ,------. ,---.  
+'--.  .--'/  O  \ |  |) /_ |  |   |  .---''   .-' 
+   |  |  |  .-.  ||  .-.  \|  |   |  `--, `.  `-. 
+   |  |  |  | |  ||  '--' /|  '--.|  `---..-'    |
+   `--'  `--' `--'`------' `-----'`------'`-----' 
+
+
+CREATE TABLE USER (
+    id_user INT PRIMARY KEY AUTO_INCREMENT,
+    firstname_user VARCHAR(255) NOT NULL,
+    lastname_user VARCHAR(255) NOT NULL,
+    email_user VARCHAR(255) NOT NULL,
+    number_user VARCHAR(10),
+    username_user VARCHAR(50) NOT NULL,
+    password_user VARCHAR(255) NOT NULL,
+    date_time_inscription_user DATETIME DEFAULT NOW(),
+    pays_user VARCHAR(255),
+    commune_user VARCHAR(255),
+    telephone_user VARCHAR(20),
+    status_user VARCHAR(12) DEFAULT 'disconnected',
+    role_user VARCHAR(5) DEFAULT 'user',
+    score_user DECIMAL(5, 2) DEFAULT 0
+);
+
+CREATE TABLE FRIEND (
+    id_friend_sender INT,
+    id_friend_receiver INT,
+    date_time_friend_requested DATETIME DEFAULT NOW(),
+    date_time_friend_accepted DATETIME DEFAULT NULL,
+    CONSTRAINT PK_FRIEND PRIMARY KEY (id_friend_sender, id_friend_receiver),
+    CONSTRAINT FK_USER_SENDER FOREIGN KEY (id_friend_sender) REFERENCES USER(id_user) ON DELETE CASCADE,
+    CONSTRAINT FK_USER_RECEIVER FOREIGN KEY (id_friend_receiver) REFERENCES USER(id_user) ON DELETE CASCADE
+);
+
+CREATE TABLE PUBLICATION (
+    id_publication INT PRIMARY KEY AUTO_INCREMENT,
+    textarea_publication VARCHAR(255) DEFAULT '',
+    date_time_publication DATETIME DEFAULT NOW(),
+    id_user INT,
+    CONSTRAINT FK_USER_PUBLI FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE
+);
+
+CREATE TABLE SHARE_USER_PUBLI (
+    id_user INT,
+    id_publication INT,
+    date_time_partage_publi DATETIME DEFAULT NOW(),
+    CONSTRAINT PK_USER_PUBLI PRIMARY KEY (id_user, id_publication),
+    CONSTRAINT FK_USER_SHARE FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE,
+    CONSTRAINT FK_PUBLI_SHARE FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE
+);
+
+CREATE TABLE FILE (
+    id_file INT PRIMARY KEY AUTO_INCREMENT,
+    description_file VARCHAR(255),
+    filename VARCHAR(255) NOT NULL,
+    filepath VARCHAR(255),
+    filepath_local VARCHAR(255)
+);
+
+CREATE TABLE PUBLICATION_FILE (
+    id_file INT,
+    id_publication INT,
+    CONSTRAINT PK_FILE_PUBLI PRIMARY KEY (id_file, id_publication),
+    CONSTRAINT FK_FILE_PUBLI FOREIGN KEY (id_file) REFERENCES FILE(id_file) ON DELETE CASCADE,
+    CONSTRAINT FK_PUBLI_FILE FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE
+);
+
+CREATE TABLE COMMENTAIRE (
+    id_commentaire INT PRIMARY KEY AUTO_INCREMENT,
+    text_commentaire VARCHAR(255) UNIQUE,
+    id_user INT,
+    id_publication INT NOT NULL,
+    date_time_commentaire DATETIME DEFAULT NOW(),
+    CONSTRAINT FK_USER_COMMENT FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE,
+    CONSTRAINT FK_PUBLI_COMMENT FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication)
+);
+
+CREATE TABLE `LIKE` (
+    id_like INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    CONSTRAINT FK_LIKE_USER FOREIGN KEY (id_user) REFERENCES USER(id_user)
+);
+
+CREATE TABLE COMMENTAIRE_LIKE (
+    id_commentaire INT,
+    id_like INT,
+    date_time_like_publication DATETIME DEFAULT NOW(),
+    CONSTRAINT PK_COMMENT_LIKE PRIMARY KEY (id_commentaire, id_like),
+    CONSTRAINT FK_COMMENT_LIKE FOREIGN KEY (id_commentaire) REFERENCES COMMENTAIRE(id_commentaire) ON DELETE CASCADE,
+    CONSTRAINT FK_LIKE_COMMENT FOREIGN KEY (id_like) REFERENCES `LIKE`(id_like) ON DELETE CASCADE
+);
+
+CREATE TABLE PUBLICATION_LIKE (
+    id_publication INT,
+    id_like INT,
+    date_time_like_publication DATETIME DEFAULT NOW(),
+    CONSTRAINT PK_PUBLI_LIKE PRIMARY KEY (id_publication, id_like),
+    CONSTRAINT FK_PUBLI_LIKE FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE,
+    CONSTRAINT FK_LIKE_PUBLI FOREIGN KEY (id_like) REFERENCES `LIKE`(id_like) ON DELETE CASCADE
+);
+
+CREATE TABLE CHAT (
+    id_chat INT PRIMARY KEY AUTO_INCREMENT,
+    date_time_debut_chat DATETIME DEFAULT NOW(),
+    type_chat VARCHAR(6) DEFAULT 'priver'
+);
+
+CREATE TABLE CHAT_USER (
+    id_chat INT,
+    id_user INT,
+    CONSTRAINT PK_CHAT_USER PRIMARY KEY (id_chat, id_user),
+    CONSTRAINT FK_CHAT_USER FOREIGN KEY (id_chat) REFERENCES CHAT(id_chat),
+    CONSTRAINT FK_USER_CHAT FOREIGN KEY (id_user) REFERENCES USER(id_user)
+);
+
+CREATE TABLE MESSAGE (
+    id_message INT PRIMARY KEY AUTO_INCREMENT,
+    id_chat INT,
+    id_user INT,
+    date_time_sended_message DATETIME DEFAULT NOW(),
+    CONSTRAINT FK_CHAT_MESSAGE FOREIGN KEY (id_chat) REFERENCES CHAT(id_chat),
+    CONSTRAINT FK_USER_MESSAGE FOREIGN KEY (id_user) REFERENCES USER(id_user)
+);
+
+CREATE TABLE FILE_MESSAGE (
+    id_file INT,
+    id_message INT,
+    CONSTRAINT PK_FILE_MSG PRIMARY KEY (id_file, id_message),
+    CONSTRAINT FK_FILE_MSG FOREIGN KEY (id_file) REFERENCES FILE(id_file) ON DELETE CASCADE,
+    CONSTRAINT FK_MSG_FILE FOREIGN KEY (id_message) REFERENCES MESSAGE(id_message) ON DELETE CASCADE
+);
+
+CREATE TABLE EVENT (
+    id_event INT PRIMARY KEY AUTO_INCREMENT,
+    id_user_creator INT,
+    date_time_debut_event DATETIME NOT NULL,
+    date_time_fin_event DATETIME NOT NULL,
+    title_event VARCHAR(255) NOT NULL,
+    status_event VARCHAR(12) DEFAULT 'indisponible',
+    max_user INT DEFAULT 0,
+    CONSTRAINT FK_USER_CREATOR FOREIGN KEY (id_user_creator) REFERENCES USER(id_user) ON DELETE CASCADE
+);
+
+CREATE TABLE EVENT_USER (
+    id_event INT,
+    id_user INT,
+    CONSTRAINT PK_EVENT_USER PRIMARY KEY (id_event, id_user),
+    CONSTRAINT FK_EVENT_USER FOREIGN KEY (id_event) REFERENCES EVENT(id_event) ON DELETE CASCADE,
+    CONSTRAINT FK_USER_EVENT FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE
+);
+
+CREATE TABLE ACTIVITE (
+    id_activite INT PRIMARY KEY AUTO_INCREMENT,
+    description_activite VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE EVENT_ACTIVITE (
+    id_event INT,
+    id_activite INT,
+    time_activite TIME NOT NULL,
+    CONSTRAINT PK_EVENT_ACTIV PRIMARY KEY (id_event, id_activite),
+    CONSTRAINT FK_EVENT_ACTIV FOREIGN KEY (id_event) REFERENCES EVENT(id_event) ON DELETE CASCADE,
+    CONSTRAINT FK_ACTIV_EVENT FOREIGN KEY (id_activite) REFERENCES ACTIVITE(id_activite) ON DELETE CASCADE
+);
+
+CREATE TABLE BLOCKED_USER (
+    id_blocker INT,
+    id_blocked INT,
+    date_blocked DATETIME DEFAULT NOW(),
+    CONSTRAINT PK_BLOCKED_USER PRIMARY KEY (id_blocker, id_blocked),
+    CONSTRAINT FK_BLOCKER_USER FOREIGN KEY (id_blocker) REFERENCES USER(id_user) ON DELETE CASCADE,
+    CONSTRAINT FK_BLOCKED_USER FOREIGN KEY (id_blocked) REFERENCES USER(id_user) ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE IMPACT (
+    id_impact INT PRIMARY KEY AUTO_INCREMENT,
+    id_activite INT NOT NULL,
+    date_impact DATE NOT NULL,
+    consommation_energie DECIMAL(10, 2),
+    emissions_ges DECIMAL(10, 2),
+    utilisation_eau DECIMAL(10, 2),
+    gestion_dechets DECIMAL(10, 2),
+    autres_indicateurs TEXT,
+    CONSTRAINT fk_activite_impact FOREIGN KEY (id_activite) REFERENCES ACTIVITE(id_activite) ON DELETE CASCADE
+);
+
+
+
+
+
+,--------.,------. ,--. ,----.    ,----.   ,------.,------.  ,---.  
+'--.  .--'|  .--. '|  |'  .-./   '  .-./   |  .---'|  .--. ''   .-' 
+   |  |   |  '--'.'|  ||  | .---.|  | .---.|  `--, |  '--'.'`.  `-. 
+   |  |   |  |\  \ |  |'  '--'  |'  '--'  ||  `---.|  |\  \ .-'    |
+   `--'   `--' '--'`--' `------'  `------' `------'`--' '--'`-----' 
+
+
+-- Déclencheur pour vérifier si l'utilisateur est bloqué avant d'ajouter à une discussion
+DELIMITER //
+
+CREATE TRIGGER check_blocked_user_chat BEFORE INSERT ON CHAT_USER
+FOR EACH ROW
+BEGIN
+    DECLARE is_blocked_sender INT;
+    DECLARE is_blocked_receiver INT;
+    
+    -- Vérifier si l'utilisateur est bloqué par l'expéditeur
+    SELECT COUNT(*) INTO is_blocked_sender FROM FRIEND WHERE id_friend_sender = NEW.id_user AND id_friend_receiver = NEW.id_chat;
+    
+    -- Vérifier si l'utilisateur est bloqué par le destinataire
+    SELECT COUNT(*) INTO is_blocked_receiver FROM FRIEND WHERE id_friend_sender = NEW.id_chat AND id_friend_receiver = NEW.id_user;
+    
+    IF is_blocked_sender > 0 OR is_blocked_receiver > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L\'utilisateur est bloqué.';
+    END IF;
+END //
+
+CREATE TRIGGER check_user_score BEFORE INSERT ON USER
+FOR EACH ROW
+BEGIN
+    IF NEW.score_user < 0 OR NEW.score_user > 100 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le score de l\'utilisateur doit être entre 0 et 100.';
+    END IF;
+END //
+
+CREATE TRIGGER prevent_duplicate_publication BEFORE INSERT ON PUBLICATION
+FOR EACH ROW
+BEGIN
+    DECLARE publication_count INT;
+    SELECT COUNT(*) INTO publication_count FROM PUBLICATION 
+    WHERE id_user = NEW.id_user 
+    AND textarea_publication = NEW.textarea_publication 
+    AND date_time_publication >= DATE_SUB(NOW(), INTERVAL 1 HOUR);
+    
+    IF publication_count > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La même publication ne peut pas être publiée deux fois en moins d\'une heure.';
+    END IF;
+END //
+
+CREATE TRIGGER check_like_count BEFORE INSERT ON "LIKE"
+FOR EACH ROW
+BEGIN
+    IF NEW.id_user < 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de like ne peut pas être inférieur à 0.';
+    END IF;
+END //
+
+CREATE TRIGGER check_chat_type BEFORE INSERT ON CHAT
+FOR EACH ROW
+BEGIN
+    IF NEW.type_chat NOT IN ('groupe', 'priver') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le type de chat doit être soit "groupe" soit "priver".';
+    END IF;
+END //
+
+CREATE TRIGGER check_private_chat_size BEFORE INSERT ON CHAT_USER
+FOR EACH ROW
+BEGIN
+    DECLARE participant_count INT;
+    SELECT COUNT(*) INTO participant_count FROM CHAT_USER WHERE id_chat = NEW.id_chat;
+    
+    IF NEW.type_chat = 'priver' AND participant_count >= 2 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un chat privé ne peut pas avoir plus de 2 participants.';
+    END IF;
+END //
+
+CREATE TRIGGER check_group_chat_size BEFORE INSERT ON CHAT_USER
+FOR EACH ROW
+BEGIN
+    DECLARE participant_count INT;
+    SELECT COUNT(*) INTO participant_count FROM CHAT_USER WHERE id_chat = NEW.id_chat;
+    
+    IF NEW.type_chat = 'groupe' AND participant_count >= 15 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un chat de groupe ne peut pas avoir plus de 15 participants.';
+    END IF;
+END //
+
+CREATE TRIGGER check_group_chat_file_size BEFORE INSERT ON FILE_MESSAGE
+FOR EACH ROW
+BEGIN
+    DECLARE total_file_size INT;
+    SELECT SUM(LENGTH(filepath_local)) INTO total_file_size FROM FILE_MESSAGE WHERE id_message = NEW.id_message;
+    
+    IF total_file_size > 2097152 THEN -- 2 Mo en octets
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La taille totale des fichiers dans une discussion de groupe ne peut pas dépasser 2 Mo par message.';
+    END IF;
+END //
+
+CREATE TRIGGER check_private_chat_file_size BEFORE INSERT ON FILE_MESSAGE
+FOR EACH ROW
+BEGIN
+    DECLARE total_file_size INT;
+    SELECT SUM(LENGTH(filepath_local)) INTO total_file_size FROM FILE_MESSAGE WHERE id_message = NEW.id_message;
+    
+    IF total_file_size > 5242880 THEN -- 5 Mo en octets
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La taille totale des fichiers dans une discussion privée ne peut pas dépasser 5 Mo par message.';
+    END IF;
+END //
+
+CREATE TRIGGER update_event_status BEFORE INSERT ON EVENT
+FOR EACH ROW
+BEGIN
+    IF NEW.date_fin_event < NOW() THEN
+        IF NEW.max_user > 0 THEN
+            IF (SELECT COUNT(*) FROM EVENT_USER WHERE id_event = NEW.id_event) >= NEW.max_user THEN
+                SET NEW.status_event = 'complet';
+            ELSE
+                SET NEW.status_event = 'disponible';
+            END IF;
+        ELSE
+            SET NEW.status_event = 'disponible';
+        END IF;
+    END IF;
+END //
+
+CREATE TRIGGER check_event_status_values BEFORE INSERT ON EVENT
+FOR EACH ROW
+BEGIN
+    IF NEW.status_event NOT IN ('disponible', 'indisponible', 'complet') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le statut de l\'événement doit être "disponible", "indisponible" ou "complet".';
+    END IF;
+END //
+
+CREATE TRIGGER check_max_users_non_negative BEFORE INSERT ON EVENT
+FOR EACH ROW
+BEGIN
+    IF NEW.max_user < 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre maximum d\'utilisateurs ne peut pas être négatif.';
+    END IF;
+END //
+
+CREATE TRIGGER prevent_adding_user_to_full_event BEFORE INSERT ON EVENT_USER
+FOR EACH ROW
+BEGIN
+    DECLARE current_users_count INT;
+    DECLARE max_users_count INT;
+    
+    SELECT COUNT(*) INTO current_users_count FROM EVENT_USER WHERE id_event = NEW.id_event;
+    SELECT max_user INTO max_users_count FROM EVENT WHERE id_event = NEW.id_event;
+    
+    IF current_users_count >= max_users_count THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L\'événement est plein, impossible d\'ajouter plus d\'utilisateurs.';
+    END IF;
+END //
+
+CREATE TRIGGER check_file_type BEFORE INSERT ON FILE
+FOR EACH ROW
+BEGIN
+    IF LOWER(SUBSTRING_INDEX(SUBSTRING_INDEX(filename, '.', -1), ' ', 1)) NOT IN ('jpg', 'jpeg', 'png', 'gif', 'pdf') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le type de fichier n\'est pas autorisé.';
+    END IF;
+END //
+
+DELIMITER ;
+
+
+
+
+
+
+ _____ _   _ _   _  ____ _____ ___ ___  _   _ ____  
+|  ___| | | | \ | |/ ___|_   _|_ _/ _ \| \ | / ___| 
+| |_  | | | |  \| | |     | |  | | | | |  \| \___ \ 
+|  _| | |_| | |\  | |___  | |  | | |_| | |\  |___) |
+|_|    \___/|_| \_|\____| |_| |___\___/|_| \_|____/ 
+
+
+
+DELIMITER //
+
+CREATE FUNCTION count_comments_for_publication(publication_id INT) RETURNS INT
+BEGIN
+    DECLARE comment_count INT;
+    
+    SELECT COUNT(*) INTO comment_count FROM COMMENTAIRE WHERE id_publication = publication_id;
+    
+    RETURN comment_count;
+END //
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE FUNCTION count_likes(item_id INT, item_type VARCHAR(20)) RETURNS INT
+BEGIN
+    DECLARE like_count INT;
+    
+    IF item_type = 'publication' THEN
+        SELECT COUNT(*) INTO like_count FROM PUBLICATION_LIKE WHERE id_publication = item_id;
+    ELSEIF item_type = 'commentaire' THEN
+        SELECT COUNT(*) INTO like_count FROM COMMENTAIRE_LIKE_TABLE WHERE id_commentaire = item_id;
+    ELSE
+        SET like_count = 0; -- Par défaut
+    END IF;
+    
+    RETURN like_count;
+END //
+
+DELIMITER ;
+
+
+
+
+
+
+
