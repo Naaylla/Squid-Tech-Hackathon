@@ -7,6 +7,7 @@ app.use(cors())
 
 const bodyParser = require('body-parser')
 const connexion = require('./utils/db')
+const router_user = require('./routes/user.routes')
 //
 app.use(bodyParser.json())
 //
@@ -70,3 +71,23 @@ app.listen(process.env.PORT, (error) => {
 
 
 // ROUTES ENDPOINT
+
+app.use('/user', router_user)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
+app.use('/', router)
