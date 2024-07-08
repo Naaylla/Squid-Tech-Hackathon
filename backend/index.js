@@ -67,3 +67,6 @@ app.listen(process.env.PORT, (error) => {
 })
 
 
+
+
+// ROUTES ENDPOINT
