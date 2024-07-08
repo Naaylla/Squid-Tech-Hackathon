@@ -1,0 +1,48 @@
+
+. user ( id_user , nom_user , prenom_user , date_naissance , date_inscription_user , pays_user , commune_user , telephone_user , status_user , role_user ) 
+. friend ( #id_user_sender , #id_user_receiver , date_send_request ) 
+. publication ( id_publication , textarea_publication   , date_publication , #id_user)
+. share_user_publi ( #id_user , #id_publi , date_partage ) 
+. file ( id_file , description_file  , filename , filepath )
+. publication_file ( #id_file , #id_publication )
+. commentaire ( id_commentaire  , text_commentaire , #id_user , #id_publication  , date_commentaire )
+. like ( id_like , #id_user)
+. commentaire_like ( #id_commentaire  , #id_like  , date_like_commentaire )
+. publication_like ( #id_publication  , #id_like , date_like_publication )
+. chat ( id_chat  , date_debut_chat  , type_chat )
+. chat_user ( #id_chat  , #id_user ) 
+. message ( id_message , #id_chat , #id_user , date_envoi_message ) 
+. file_message ( #id_file , #id_message )
+. event ( id_event , #id_user , date_event , time_event , title_event , status_event , max_user ) 
+. event_user ( #id_event , #id_user ) 
+. activité ( id_activité  , description_activité ) 
+. event_activité ( #id_event , #id_activité  , time_activité )
+
+
+
+
+
+// declencheur pour verifier si l'utilisateur est bloquée si oui l'utilisateur ne peut pas etre ajouter a une
+discussion ou l'utilisateur qui l'a bloquer participe et 
+ne peut pas voir la publication de l'utilisateur qui l'a bloquer
+// declencheur pour verifier que le score de l'utilisateur est entre 0 et 100
+// declencheur qui verifie si la meme publication a été deja publier 1h avant pour eviter les attaques de bot
+// declencheur pour verifier que le nombre de like n'est pas inferieur a 0 
+// declencheur pour verifier que le type de chat est soit groupe soit priver
+// declencheur pour verifier le nombre de personne dans le chat si le chat est de type priver
+// declencheur pour verifier le nombre de personne dans le chat si le chat est de type groupe
+// declencheur pour verifier le nombre de fichier dans une discussion groupe ne depasse pas 2mo par message
+// declencheur pour verifier la taille des fichiers dans une discussion priver ne depasse pas 5mo par message
+// declencheur pour verifier le status de l'evenement si la date du jour depasse la date de fin et si elle ne depasse
+pas la date de debut mettre sur disponible dans le cas ou le nombre d'utilisateur ne depasse pas le nombre maximum
+d'utilisateur et si le nombre d'utilisateur egale au maximum mettre complet sinon mettre indisponible
+// declencheur pour verifier si le status de l'evenment est égale a disponible ou indisponible ou complet
+// declencheur pour verifier que le nombre maximum d'utilisateur n'est pas negatif
+// declencheur pour verifier que le nombre d'utilisateur n'est pas egale aux nombre d'utilisateur max sinon
+ne pas ajouter d'utilisateur dans la table event_user
+// declencheur qui verifier le type de fichier afin d'eviter les attaques reverse shell et injection 
+de code malveillant
+//X declencheur pour verifier les données de l'impact
+//X Fonction pour calculer le nombre de Commentaire d'une publication 
+//X Fonction pour calculer le nombre de Like d'une publication ou d'un commentaire 
+//X Fonction pour calculer le score de l'utlisateur d'apres les évenements
