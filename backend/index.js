@@ -27,6 +27,7 @@ const router_event_user = require('./routes/event_user.routes')
 const router_event = require('./routes/event.routes')
 const router_file_message = require('./routes/file_message.routes')
 const router_file = require('./routes/file.routes')
+const router_auth = require('./routes/auth.routes')
 //
 app.use(bodyParser.json())
 //
@@ -103,7 +104,8 @@ app.listen(process.env.PORT, (error) => {
 
 
 
-
+// routes pour authentification 
+app.use('/auth', router_auth)
 // routes des activités qui sont ajouter aux évènements
 app.use('/activite', router_activite)
 // routes des utilisateurs bloquer 

@@ -11,7 +11,6 @@ CREATE TABLE USER (
     firstname_user VARCHAR(255) NOT NULL,
     lastname_user VARCHAR(255) NOT NULL,
     email_user VARCHAR(255) NOT NULL,
-    number_user VARCHAR(10),
     username_user VARCHAR(50) NOT NULL,
     password_user VARCHAR(255) NOT NULL,
     date_time_inscription_user DATETIME DEFAULT NOW(),
@@ -89,7 +88,7 @@ CREATE TABLE COMMENTAIRE (
     id_publication INT NOT NULL,
     date_time_commentaire DATETIME DEFAULT NOW(),
     CONSTRAINT FK_USER_COMMENT FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE,
-    CONSTRAINT FK_PUBLI_COMMENT FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication)
+    CONSTRAINT FK_PUBLI_COMMENT FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE
 );
 
 
@@ -198,7 +197,6 @@ CREATE TABLE EVENT_USER (
 ▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE ACTIVITE (
     id_activite INT PRIMARY KEY AUTO_INCREMENT,
-    heure_debut_activit time not null ,
     description_activite VARCHAR(255) NOT NULL
 );
 
@@ -492,33 +490,6 @@ BEGIN
 END //
 
 DELIMITER ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
