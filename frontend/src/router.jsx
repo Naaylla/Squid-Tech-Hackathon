@@ -1,17 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./views/home";
-import Registration from "./views/registration";
+import { Routes, Route } from "react-router-dom";
 import Login from "./views/login";
+import Home from "./views/home";
+import Signup from "./views/signup";
 
-const Routes = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/registration" component={Registration} />
-      <Route path="/login" component={Login} />
-    </Switch>
-  </Router>
-);
+const Routers = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />}></Route>
+      <Route path="/signup" element={<Signup />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+    </Routes>
+  );
+};
 
-export default Routes;
+export default Routers;
