@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormUser from "../../components/FormUser";
+import Navbar from "../../components/Navbar";
 
 const Profile = () => {
     // fetch ici les données de l'utilisateur connecté :))
@@ -20,6 +21,10 @@ const Profile = () => {
     };
 
     return (
+        <>
+            <div className="border">
+                <Navbar></Navbar>
+            </div>
         <div className="flex flex-col items-start justify-center min-h-screen mx-auto p-4 w-full xl:w-2/3">
             {/* Profile Header */}
             <div className="w-full  mb-6">
@@ -60,6 +65,7 @@ const Profile = () => {
                 <FormUser initialData={userData} updateUserData={handleUpdateUserData} />
             </div>
         </div>
+        </>
     );
 };
 
