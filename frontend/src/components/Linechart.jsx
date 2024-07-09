@@ -6,11 +6,11 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, T
 
 const LineChart = () => {
   const data = {
-    labels: ['0','01','02', '03', '04', '05', '06', '07', '08', '09', '10','11','12'],
+    labels: ['0', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
     datasets: [
       {
         label: 'Plantation',
-        data: [4000, 3500, 2500, 5000, 2000, 2500, 3000,5000,9000,10000,12000],
+        data: [4000, 3500, 2500, 5000, 2000, 2500, 3000, 5000, 9000, 10000, 12000],
         fill: false,
         borderColor: 'rgba(144, 238, 144, 1)',
         tension: 0.4,
@@ -23,12 +23,12 @@ const LineChart = () => {
     plugins: {
       legend: {
         display: false,
-    },
+      },
       tooltip: {
         mode: 'index',
         intersect: false,
         callbacks: {
-          label: function(tooltipItem) {
+          label: function (tooltipItem) {
             return `Plantation: ${tooltipItem.raw}`;
           },
         },
@@ -51,7 +51,7 @@ const LineChart = () => {
           drawTicks: false,
         },
         ticks: {
-          callback: function(value) {
+          callback: function (value) {
             return `${value}`;
           },
           color: 'black',
