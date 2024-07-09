@@ -42,7 +42,7 @@ const update_publication_file = async (req, res) => {
     });
 };
 
-// Obtenir tous les fichiers de publication
+// Obtenir tous les fichiers de publications
 const get_all_publication_file = async (req, res) => {
     const sql = 'SELECT * FROM PUBLICATION_FILE';
 
@@ -54,10 +54,10 @@ const get_all_publication_file = async (req, res) => {
     });
 };
 
-// Obtenir un fichier de publication par son ID
+// Obtenir les fichier d'une publication par son ID
 const get_publication_file = async (req, res) => {
-    const { id_file, id_publication } = req.params;
-    const sql = 'SELECT * FROM PUBLICATION_FILE WHERE id_file = ? AND id_publication = ?';
+    const { id_publication } = req.params;
+    const sql = 'SELECT * FROM PUBLICATION_FILE WHERE id_publication = ?';
 
     connexion.query(sql, [id_file, id_publication], (err, rows) => {
         if (err) {

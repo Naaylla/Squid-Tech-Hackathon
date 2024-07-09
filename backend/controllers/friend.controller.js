@@ -42,11 +42,10 @@ const update_friend = async (req, res) => {
     });
 };
 
-// Obtenir tous les amis
+// Obtenir tous les amis de la liste 
 const get_all_friend = async (req, res) => {
     const sql = 'SELECT * FROM FRIEND';
-
-    connexion.query(sql, (err, rows) => {
+    connexion.query(sql, [id], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection des amis" });
         }
@@ -57,7 +56,7 @@ const get_all_friend = async (req, res) => {
 // Obtenir un ami par son ID
 const get_friend = async (req, res) => {
     const { id } = req.params;
-    const sql = 'SELECT * FROM FRIEND WHERE id_friend_sender = ? OR id_friend_receiver = ?';
+    const sql = 'SELECT * FROM FRIEND WHERE id_friend_receiver = ?';
 
     connexion.query(sql, [id, id], (err, rows) => {
         if (err) {

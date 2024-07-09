@@ -56,10 +56,10 @@ const get_all_file = async (req, res) => {
 
 // Obtenir un fichier par son ID
 const get_file = async (req, res) => {
-    const { id } = req.params;
+    const { id_file } = req.params;
     const sql = 'SELECT * FROM FILE WHERE id_file = ?';
 
-    connexion.query(sql, [id], (err, rows) => {
+    connexion.query(sql, [id_file], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection du fichier" });
         }
