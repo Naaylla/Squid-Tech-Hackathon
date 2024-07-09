@@ -56,7 +56,7 @@ const get_all_file_message = async (req, res) => {
 
 // Obtenir un fichier message par son ID
 const get_file_message = async (req, res) => {
-    const { id } = req.params;
+    const { id_file } = req.params;
     const sql = 'SELECT * FROM FILE_MESSAGE WHERE id_file = ?';
 
     connexion.query(sql, [id], (err, rows) => {

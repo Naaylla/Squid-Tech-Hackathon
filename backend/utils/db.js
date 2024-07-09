@@ -12,7 +12,7 @@ console.log('DB_NAME:', process.env.DB_NAME);
 const connexion = mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USERNAME || 'root',
-    password: process.env.DB_PASSWORD || "",
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME || "recyclage",
     connectTimeout: 10000 // 10 seconds timeout
 });

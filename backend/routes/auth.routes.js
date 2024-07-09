@@ -1,10 +1,12 @@
-const router_ = require('express').Router()
+const login = require('../controllers/auth.controller')
 
-router_.get('/')
-router_.get('/:id')
-router_.post('/add')
-router_.delete('/delete/:id')
-router_.put('/update/:id')
+const router_auth = require('express').Router()
+
+router_auth.post('/login', login)
+router_auth.get('/:id')
+router_auth.post('/add')
+router_auth.delete('/delete/:id')
+router_auth.put('/update/:id')
 
 
-module.exports = router_
+module.exports = router_auth  

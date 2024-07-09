@@ -1,7 +1,6 @@
 const connexion = require("../utils/db");
 
-const connexion = require("../utils/db");
-
+// Ajouter un événement à une activité
 const add_event_activite = async (req, res) => {
     const { id_event, id_activite, time_activite } = req.body;
     const sql = 'INSERT INTO EVENT_ACTIVITE (id_event, id_activite, time_activite) VALUES (?, ?, ?)';
@@ -15,6 +14,7 @@ const add_event_activite = async (req, res) => {
     });
 };
 
+// Supprimer un événement d'une activité
 const delete_event_activite = async (req, res) => {
     const { id_event, id_activite } = req.params;
     const sql = 'DELETE FROM EVENT_ACTIVITE WHERE id_event = ? AND id_activite = ?';
@@ -27,8 +27,7 @@ const delete_event_activite = async (req, res) => {
     });
 };
 
-
-
+// Mettre à jour l'heure d'un événement dans une activité
 const update_event_activite = async (req, res) => {
     const { id_event, id_activite } = req.params;
     const { time_activite } = req.body;
@@ -43,7 +42,7 @@ const update_event_activite = async (req, res) => {
     });
 };
 
-
+// Obtenir tous les événements associés à une activité
 const get_all_event_activite = async (req, res) => {
     const sql = 'SELECT * FROM EVENT_ACTIVITE';
 
@@ -55,9 +54,9 @@ const get_all_event_activite = async (req, res) => {
     });
 };
 
-
+// Obtenir les événement  associé à une activité par son ID
 const get_event_activite = async (req, res) => {
-    const { id_event, id_activite } = req.params;
+    const { id_event } = req.params;
     const sql = 'SELECT * FROM EVENT_ACTIVITE WHERE id_event = ? AND id_activite = ?';
 
     connexion.query(sql, [id_event, id_activite], (err, rows) => {
@@ -67,7 +66,6 @@ const get_event_activite = async (req, res) => {
         res.status(200).json({ data: rows, message: "Sélectionné avec succès" });
     });
 };
-
 
 module.exports = {
     add_event_activite,

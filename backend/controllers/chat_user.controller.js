@@ -41,7 +41,7 @@ const update_chat_user = async (req, res) => {
     });
 };
 
-// Obtenir tous les utilisateurs de chat
+// Obtenir tous les utilisateurs de chats
 const get_all_chat_user = async (req, res) => {
     const sql = 'SELECT * FROM CHAT_USER';
 
@@ -53,9 +53,9 @@ const get_all_chat_user = async (req, res) => {
     });
 };
 
-// Obtenir un utilisateur de chat par son ID
+// Obtenir un utilisateurs de chat par son ID
 const get_chat_user = async (req, res) => {
-    const { id_chat, id_user } = req.params;
+    const { id_chat } = req.params;
     const sql = 'SELECT * FROM CHAT_USER WHERE id_chat = ? AND id_user = ?';
 
     connexion.query(sql, [id_chat, id_user], (err, rows) => {

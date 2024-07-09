@@ -5,12 +5,12 @@
    `--'  `--' `--'`------' `-----'`------'`-----' 
 
 
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE USER (
     id_user INT PRIMARY KEY AUTO_INCREMENT,
     firstname_user VARCHAR(255) NOT NULL,
     lastname_user VARCHAR(255) NOT NULL,
     email_user VARCHAR(255) NOT NULL,
-    number_user VARCHAR(10),
     username_user VARCHAR(50) NOT NULL,
     password_user VARCHAR(255) NOT NULL,
     date_time_inscription_user DATETIME DEFAULT NOW(),
@@ -22,6 +22,8 @@ CREATE TABLE USER (
     score_user DECIMAL(5, 2) DEFAULT 0
 );
 
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE FRIEND (
     id_friend_sender INT,
     id_friend_receiver INT,
@@ -32,6 +34,8 @@ CREATE TABLE FRIEND (
     CONSTRAINT FK_USER_RECEIVER FOREIGN KEY (id_friend_receiver) REFERENCES USER(id_user) ON DELETE CASCADE
 );
 
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE PUBLICATION (
     id_publication INT PRIMARY KEY AUTO_INCREMENT,
     textarea_publication VARCHAR(255) DEFAULT '',
@@ -40,6 +44,9 @@ CREATE TABLE PUBLICATION (
     CONSTRAINT FK_USER_PUBLI FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE SHARE_USER_PUBLI (
     id_user INT,
     id_publication INT,
@@ -49,6 +56,9 @@ CREATE TABLE SHARE_USER_PUBLI (
     CONSTRAINT FK_PUBLI_SHARE FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE FILE (
     id_file INT PRIMARY KEY AUTO_INCREMENT,
     description_file VARCHAR(255),
@@ -57,6 +67,9 @@ CREATE TABLE FILE (
     filepath_local VARCHAR(255)
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE PUBLICATION_FILE (
     id_file INT,
     id_publication INT,
@@ -65,6 +78,9 @@ CREATE TABLE PUBLICATION_FILE (
     CONSTRAINT FK_PUBLI_FILE FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE COMMENTAIRE (
     id_commentaire INT PRIMARY KEY AUTO_INCREMENT,
     text_commentaire VARCHAR(255) UNIQUE,
@@ -72,15 +88,21 @@ CREATE TABLE COMMENTAIRE (
     id_publication INT NOT NULL,
     date_time_commentaire DATETIME DEFAULT NOW(),
     CONSTRAINT FK_USER_COMMENT FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE,
-    CONSTRAINT FK_PUBLI_COMMENT FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication)
+    CONSTRAINT FK_PUBLI_COMMENT FOREIGN KEY (id_publication) REFERENCES PUBLICATION(id_publication) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE `LIKE` (
     id_like INT PRIMARY KEY AUTO_INCREMENT,
     id_user INT NOT NULL,
     CONSTRAINT FK_LIKE_USER FOREIGN KEY (id_user) REFERENCES USER(id_user)
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE COMMENTAIRE_LIKE (
     id_commentaire INT,
     id_like INT,
@@ -90,6 +112,9 @@ CREATE TABLE COMMENTAIRE_LIKE (
     CONSTRAINT FK_LIKE_COMMENT FOREIGN KEY (id_like) REFERENCES `LIKE`(id_like) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE PUBLICATION_LIKE (
     id_publication INT,
     id_like INT,
@@ -99,12 +124,18 @@ CREATE TABLE PUBLICATION_LIKE (
     CONSTRAINT FK_LIKE_PUBLI FOREIGN KEY (id_like) REFERENCES `LIKE`(id_like) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE CHAT (
     id_chat INT PRIMARY KEY AUTO_INCREMENT,
     date_time_debut_chat DATETIME DEFAULT NOW(),
     type_chat VARCHAR(6) DEFAULT 'priver'
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE CHAT_USER (
     id_chat INT,
     id_user INT,
@@ -113,6 +144,9 @@ CREATE TABLE CHAT_USER (
     CONSTRAINT FK_USER_CHAT FOREIGN KEY (id_user) REFERENCES USER(id_user)
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE MESSAGE (
     id_message INT PRIMARY KEY AUTO_INCREMENT,
     id_chat INT,
@@ -122,6 +156,9 @@ CREATE TABLE MESSAGE (
     CONSTRAINT FK_USER_MESSAGE FOREIGN KEY (id_user) REFERENCES USER(id_user)
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE FILE_MESSAGE (
     id_file INT,
     id_message INT,
@@ -130,6 +167,9 @@ CREATE TABLE FILE_MESSAGE (
     CONSTRAINT FK_MSG_FILE FOREIGN KEY (id_message) REFERENCES MESSAGE(id_message) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE EVENT (
     id_event INT PRIMARY KEY AUTO_INCREMENT,
     id_user_creator INT,
@@ -141,6 +181,9 @@ CREATE TABLE EVENT (
     CONSTRAINT FK_USER_CREATOR FOREIGN KEY (id_user_creator) REFERENCES USER(id_user) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE EVENT_USER (
     id_event INT,
     id_user INT,
@@ -149,11 +192,17 @@ CREATE TABLE EVENT_USER (
     CONSTRAINT FK_USER_EVENT FOREIGN KEY (id_user) REFERENCES USER(id_user) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE ACTIVITE (
     id_activite INT PRIMARY KEY AUTO_INCREMENT,
     description_activite VARCHAR(255) NOT NULL
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE EVENT_ACTIVITE (
     id_event INT,
     id_activite INT,
@@ -163,6 +212,9 @@ CREATE TABLE EVENT_ACTIVITE (
     CONSTRAINT FK_ACTIV_EVENT FOREIGN KEY (id_activite) REFERENCES ACTIVITE(id_activite) ON DELETE CASCADE
 );
 
+
+
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE BLOCKED_USER (
     id_blocker INT,
     id_blocked INT,
@@ -174,6 +226,7 @@ CREATE TABLE BLOCKED_USER (
 
 
 
+▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE IMPACT (
     id_impact INT PRIMARY KEY AUTO_INCREMENT,
     id_activite INT NOT NULL,
@@ -197,7 +250,10 @@ CREATE TABLE IMPACT (
    `--'   `--' '--'`--' `------'  `------' `------'`--' '--'`-----' 
 
 
--- Déclencheur pour vérifier si l'utilisateur est bloqué avant d'ajouter à une discussion
+
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 DELIMITER //
 
 CREATE TRIGGER check_blocked_user_chat BEFORE INSERT ON CHAT_USER
@@ -217,6 +273,8 @@ BEGIN
     END IF;
 END //
 
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 CREATE TRIGGER check_user_score BEFORE INSERT ON USER
 FOR EACH ROW
 BEGIN
@@ -224,6 +282,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le score de l\'utilisateur doit être entre 0 et 100.';
     END IF;
 END //
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
 CREATE TRIGGER prevent_duplicate_publication BEFORE INSERT ON PUBLICATION
 FOR EACH ROW
@@ -239,6 +299,8 @@ BEGIN
     END IF;
 END //
 
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 CREATE TRIGGER check_like_count BEFORE INSERT ON "LIKE"
 FOR EACH ROW
 BEGIN
@@ -246,6 +308,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre de like ne peut pas être inférieur à 0.';
     END IF;
 END //
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
 CREATE TRIGGER check_chat_type BEFORE INSERT ON CHAT
 FOR EACH ROW
@@ -255,16 +319,27 @@ BEGIN
     END IF;
 END //
 
-CREATE TRIGGER check_private_chat_size BEFORE INSERT ON CHAT_USER
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
+CREATE TRIGGER check_group_chat_size BEFORE INSERT ON CHAT_USER
 FOR EACH ROW
 BEGIN
     DECLARE participant_count INT;
+    DECLARE chat_type VARCHAR(6);
+    
+    -- Récupérer le type de la discussion à partir de la table CHAT
+    SELECT type_chat INTO chat_type FROM CHAT WHERE id_chat = NEW.id_chat;
+    
+    -- Compter le nombre de participants actuels dans la discussion
     SELECT COUNT(*) INTO participant_count FROM CHAT_USER WHERE id_chat = NEW.id_chat;
     
-    IF NEW.type_chat = 'priver' AND participant_count >= 2 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un chat privé ne peut pas avoir plus de 2 participants.';
+    -- Vérifier si le type de la discussion est 'groupe' et s'il y a déjà 15 participants
+    IF chat_type = 'groupe' AND participant_count >= 15 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un chat de groupe ne peut pas avoir plus de 15 participants.';
     END IF;
 END //
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
 CREATE TRIGGER check_group_chat_size BEFORE INSERT ON CHAT_USER
 FOR EACH ROW
@@ -277,6 +352,8 @@ BEGIN
     END IF;
 END //
 
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 CREATE TRIGGER check_group_chat_file_size BEFORE INSERT ON FILE_MESSAGE
 FOR EACH ROW
 BEGIN
@@ -288,6 +365,8 @@ BEGIN
     END IF;
 END //
 
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 CREATE TRIGGER check_private_chat_file_size BEFORE INSERT ON FILE_MESSAGE
 FOR EACH ROW
 BEGIN
@@ -298,6 +377,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La taille totale des fichiers dans une discussion privée ne peut pas dépasser 5 Mo par message.';
     END IF;
 END //
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
 CREATE TRIGGER update_event_status BEFORE INSERT ON EVENT
 FOR EACH ROW
@@ -315,6 +396,8 @@ BEGIN
     END IF;
 END //
 
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 CREATE TRIGGER check_event_status_values BEFORE INSERT ON EVENT
 FOR EACH ROW
 BEGIN
@@ -323,6 +406,8 @@ BEGIN
     END IF;
 END //
 
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
+
 CREATE TRIGGER check_max_users_non_negative BEFORE INSERT ON EVENT
 FOR EACH ROW
 BEGIN
@@ -330,6 +415,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le nombre maximum d\'utilisateurs ne peut pas être négatif.';
     END IF;
 END //
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
 CREATE TRIGGER prevent_adding_user_to_full_event BEFORE INSERT ON EVENT_USER
 FOR EACH ROW
@@ -344,6 +431,8 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L\'événement est plein, impossible d\'ajouter plus d\'utilisateurs.';
     END IF;
 END //
+
+▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇▇▇▇▓▒░ 「✦」 ░▒▓▇▇▇
 
 CREATE TRIGGER check_file_type BEFORE INSERT ON FILE
 FOR EACH ROW
