@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from 'react-google-recaptcha';
+import api from '../utils/apiConfig'
 
 function Form() {
     const navigate = useNavigate();
@@ -19,19 +20,16 @@ function Form() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8000/auth/login", {
+            const response = await api.post("/auth/login", {
                 username: email,
                 password: password,
                 recaptchaToken: captchaValue
             });
+            console.log(response);
+            navigate("/home", { state: { id: email } });
 
-            if (response.data.status === "success") {
-                navigate("/home", { state: { id: email } });
-            } else {
-                setErrorMessage(response.data.message);
-            }
         } catch (e) {
-            setErrorMessage("An error occurred. Please try again.");
+            setErrorMessage(e.response.data.message);
             console.log(e);
         }
     }

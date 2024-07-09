@@ -51,6 +51,9 @@ app.use(cors({
         }
     },
     methods: ["POST", "GET", "DELETE", "PUT"],
+    headers: {
+        'Content-Type': 'application/json',
+    },
     credentials: true
 }));
 
