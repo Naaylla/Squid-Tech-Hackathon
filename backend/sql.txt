@@ -140,8 +140,8 @@ CREATE TABLE CHAT_USER (
     id_chat INT,
     id_user INT,
     CONSTRAINT PK_CHAT_USER PRIMARY KEY (id_chat, id_user),
-    CONSTRAINT FK_CHAT_USER FOREIGN KEY (id_chat) REFERENCES CHAT(id_chat),
-    CONSTRAINT FK_USER_CHAT FOREIGN KEY (id_user) REFERENCES USER(id_user)
+    CONSTRAINT FK_CHAT_USER FOREIGN KEY (id_chat) REFERENCES CHAT(id_chat) on delete cascade ,
+    CONSTRAINT FK_USER_CHAT FOREIGN KEY (id_user) REFERENCES USER(id_user) on delete cascade 
 );
 
 

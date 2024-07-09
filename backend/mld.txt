@@ -1,3 +1,4 @@
+------------ MLD ( MODEL LOGIQUE DE DONNEE )
 
 . user ( id_user , nom_user , prenom_user , date_naissance , date_inscription_user , pays_user , commune_user , telephone_user , status_user , role_user ) 
 . friend ( #id_user_sender , #id_user_receiver , date_send_request ) 
@@ -21,6 +22,8 @@
 
 
 
+
+---------------- RULES
 
 // declencheur pour verifier si l'utilisateur est bloquée si oui l'utilisateur ne peut pas etre ajouter a une
 discussion ou l'utilisateur qui l'a bloquer participe et 

@@ -98,7 +98,8 @@ app.listen(process.env.PORT, (error) => {
  * 
  * delete request ---- /routes_principal/delete/id_id1/id_id2
  * update request ---- /routes_principal/update/id_id1/id_id2
- * get request    ---- /routes_principal/id_id1
+ * get specifique request    ---- /routes_principal/id_id1
+ * get request    ---- /routes_principal
  * post request   ----/routes_principal/add
  */
 
@@ -147,7 +148,7 @@ app.use('/shared/user/publications', router_user_publi)
 // routes des utlisateurs 
 app.use('/users', router_user)
 // Middleware pour la gestion des routes 404
-app.use('/*', async (req, res) => {
+app.use('/*', async (req, res, next) => {
     res.status(404).json({ message: 'Route not Found' });
 });
 

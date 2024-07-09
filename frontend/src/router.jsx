@@ -5,6 +5,7 @@ import Home from "./views/home";
 import Signup from "./views/signup";
 import Profile from "./views/profile";
 import Evenements from "./views/evenements";
+import Dashboard from "./views/dashboard";
 
 const Routers = () => {
   return (
@@ -14,7 +15,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/evenements" element={<Evenements />}></Route>
-      
+      <Route path="/dashboard" element={<Dashboard />}></Route>
     </Routes>
   );
 };
