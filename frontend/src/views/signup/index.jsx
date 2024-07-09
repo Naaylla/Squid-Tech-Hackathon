@@ -1,9 +1,20 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+import Form from "../../components/Form";
 
 export default function Signup() {
     return (
-        <div>
-            <h1>Registration</h1>
+        <div className="flex w-full h-screen items-center justify-center">
+            <div className="lg:w-2/4 md:w-6/12 rounded-lg shadow-md bg-white overflow-hidden p-8 flex flex-col items-center justify-center space-y-8 border-2 border-sky-500">
+                <h1 className="text-center font-bold text-4xl">Bienvenue !</h1>
+                <p className="font-light text-lg text-center">
+                    <span className="opacity-60">Vous avez un compte ? </span>
+                    <Link to="/signup" className="text-blue-500 hover:underline">
+                        Connectez vous des maintenant .
+                    </Link>
+                </p>
+                <Form />
+            </div>
         </div>
     );
 }
