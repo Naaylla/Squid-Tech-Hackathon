@@ -63,7 +63,7 @@ function Form() {
                 />
                 <button
                     type="submit"
-                    className="py-4 w-full border border-gray-300 rounded"
+                    className="py-4 w-full border text-white border-gray-300 rounded bg-sky-500 hover:bg-sky-700 mt-5"
                     disabled={!captchaValue}
                 >
                     Connexion
