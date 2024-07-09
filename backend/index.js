@@ -98,7 +98,8 @@ app.listen(process.env.PORT, (error) => {
  * 
  * delete request ---- /routes_principal/delete/id_id1/id_id2
  * update request ---- /routes_principal/update/id_id1/id_id2
- * get request    ---- /routes_principal/id_id1
+ * get specifique request    ---- /routes_principal/id_id1
+ * get request    ---- /routes_principal
  * post request   ----/routes_principal/add
  */
 
