@@ -10,7 +10,7 @@ router_auth.post('/login', login);
 // Route de deconnexion
 router_auth.get("/logout", (req, res) => {
     req.logout();
-    res.redirect(CLIENT_URL);
+    res.redirect(`${process.env.BASE_URL}`);
 });
 
 // Route de succès de OAuth
@@ -23,7 +23,7 @@ router_auth.get('/login/success', (req, res) => {
             user: req.user,
             token: token
         });
-        res.redirect(`${BASE_URL}`)
+        res.redirect(`${process.env.BASE_URL}/home`)
     } else {
         res.status(401).json({
             success: false,
@@ -49,7 +49,7 @@ router_auth.get(
     passport.authenticate("google", { failureRedirect: "/login/failed" }),
     function (req, res) {
         // Successful authentication, redirect home.
-        res.redirect('/');
+        res.redirect(`${process.env.BASE_URL}/home`);
     }
 );
 

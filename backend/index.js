@@ -31,14 +31,7 @@ const router_auth = require('./routes/auth.routes')
 const passport = require('passport')
 const passportSetup = require('./utils/passport')
 const session = require('express-session');
-const https = require('https');
-const fs = require('fs');
 
-// Charger les certificats SSL
-const options = {
-    key: fs.readFileSync('localhost-key.pem'),
-    cert: fs.readFileSync('localhost.pem')
-};
 
 //
 app.use(bodyParser.json())
@@ -103,7 +96,7 @@ connexion.connect((err) => {
 
 
 // Créer le serveur HTTPS
-https.createServer(options, app).listen(process.env.PORT, (error) => {
+app.listen(process.env.PORT, (error) => {
     if (error) {
         return console.log('Erreur lors du demarrage du server');
     }
