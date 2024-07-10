@@ -109,7 +109,7 @@ app.listen(process.env.PORT, (error) => {
 
 /**
  *  FAST DOCUMENTATION
- * How endpoint run ?
+ *  How endpoints run ?
  * 
  * id_id1 = premier mot apres 'router_' que l'on trouve dans les variables des endpoints
  * id_id2 = deuxiemme mot apres 'router_' que l'on trouve dans les variables des endpoints
