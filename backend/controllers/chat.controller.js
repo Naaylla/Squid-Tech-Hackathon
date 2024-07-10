@@ -2,9 +2,8 @@ const connexion = require("../utils/db");
 
 // Ajouter un chat
 const add_chat = async (req, res) => {
-    const { type_chat } = req.body; // Ajoutez d'autres champs nécessaires ici
-    const sql = 'INSERT INTO CHAT (type_chat) VALUES (?)'; // Pas besoin de nom, sera mis à jour par le trigger
-    const values = [type_chat];
+    const sql = 'INSERT INTO CHAT () VALUES ()'; // Ne pas spécifier le type_chat ici
+    const values = [];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -13,6 +12,7 @@ const add_chat = async (req, res) => {
         res.status(200).json({ data: result, message: "Ajout avec succès" });
     });
 };
+
 
 // Supprimer un chat
 const delete_chat = async (req, res) => {

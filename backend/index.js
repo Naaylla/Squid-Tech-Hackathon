@@ -28,10 +28,42 @@ const router_event = require('./routes/event.routes')
 const router_file_message = require('./routes/file_message.routes')
 const router_file = require('./routes/file.routes')
 const router_auth = require('./routes/auth.routes')
+const passport = require('passport')
+const passportSetup = require('./utils/passport')
+const session = require('express-session');
+const https = require('https');
+const fs = require('fs');
+
+// Charger les certificats SSL
+const options = {
+    key: fs.readFileSync('localhost-key.pem'),
+    cert: fs.readFileSync('localhost.pem')
+};
+
 //
 app.use(bodyParser.json())
 //
 app.use(bodyParser.urlencoded({ extended: true }))
+
+
+
+
+
+
+app.use(express.json())
+
+app.use(session({
+    name: "session",
+    secret: `${process.env.SESSION_SECRET}`, // Changez cela par une chaîne de caractères secrète unique
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Définissez à true si vous utilisez HTTPS
+}));
+
+// OAuth2.0
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 
 
@@ -40,7 +72,6 @@ const allowedOrigins = [
     'http://localhost:5173',
     process.env.BASE_URL
 ];
-
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -57,14 +88,6 @@ app.use(cors({
     credentials: true
 }));
 
-
-app.use(express.json())
-
-
-
-
-
-
 // Connexion a la base de donnée
 connexion.connect((err) => {
     if (err) {
@@ -78,15 +101,14 @@ connexion.connect((err) => {
 
 // Server mis à l'écoute
 
-app.listen(process.env.PORT, (error) => {
+
+// Créer le serveur HTTPS
+https.createServer(options, app).listen(process.env.PORT, (error) => {
     if (error) {
         return console.log('Erreur lors du demarrage du server');
     }
     console.log('Demarrage du serveur sur le port : ' + process.env.PORT || 8080);
 })
-
-
-
 
 // ROUTES 
 
