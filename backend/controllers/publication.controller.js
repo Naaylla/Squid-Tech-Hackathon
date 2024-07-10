@@ -2,9 +2,9 @@ const connexion = require("../utils/db");
 
 // Ajouter une publication
 const add_publication = async (req, res) => {
-    const { textarea_publication, id_user } = req.body;
-    const sql = 'INSERT INTO PUBLICATION (textarea_publication, id_user) VALUES (?, ?)';
-    const values = [textarea_publication, id_user];
+    const { textarea_publication, id_user, type } = req.body;
+    const sql = 'INSERT INTO PUBLICATION (textarea_publication, id_user , type_publication) VALUES (?, ?, ?)';
+    const values = [textarea_publication, id_user, type];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -29,9 +29,10 @@ const delete_publication = async (req, res) => {
 
 // Mettre à jour une publication
 const update_publication = async (req, res) => {
-    const { id_publication, textarea_publication, id_user } = req.body;
-    const sql = 'UPDATE PUBLICATION SET textarea_publication = ?, id_user = ? WHERE id_publication = ?';
-    const values = [textarea_publication, id_user, id_publication];
+    const { id_publication } = req.params;
+    const { textarea_publication, id_user, type } = req.body;
+    const sql = 'UPDATE PUBLICATION SET textarea_publication = ?, id_user = ? , type_publication = ? WHERE id_publication = ?';
+    const values = [textarea_publication, id_user, type, id_publication];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -55,10 +56,10 @@ const get_all_publication = async (req, res) => {
 
 // Obtenir une publication par son ID
 const get_publication = async (req, res) => {
-    const { id } = req.params;
+    const { id_publication } = req.params;
     const sql = 'SELECT * FROM PUBLICATION WHERE id_publication = ?';
 
-    connexion.query(sql, [id], (err, rows) => {
+    connexion.query(sql, [id_publication], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection de la publication" });
         }
