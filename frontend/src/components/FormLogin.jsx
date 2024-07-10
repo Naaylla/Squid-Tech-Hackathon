@@ -63,11 +63,13 @@ function Form() {
                 />
                 <button
                     type="submit"
-                    className="py-3 w-full border text-white border-gray-300 rounded bg-sky-500 hover:bg-sky-700 mt-5 rounded-lg"
+                    className="py-3 w-full mt-4 border text-white border-gray-300 rounded bg-sky-500 hover:bg-sky-700 mt-5 rounded-lg"
                     disabled={!captchaValue}
                 >
                     Connexion
                 </button>
+
+
             </form>
             {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
         </div>
