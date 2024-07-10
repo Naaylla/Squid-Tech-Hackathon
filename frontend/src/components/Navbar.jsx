@@ -36,7 +36,7 @@ export default function Navbar() {
             scrollTo("Home");
           }}
         >
-          Acceuil
+          Accueil
         </m.button>
         <m.button
           whileHover={{ scale: 1.1 }}

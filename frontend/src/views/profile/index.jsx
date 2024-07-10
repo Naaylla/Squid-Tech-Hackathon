@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import FormUser from "../../components/FormUser";
 import Navbar from "../../components/Navbar";
-import PostsToggle from "../../components/PostsToggle"; // Import the PostsToggle component
+import PostsToggle from "../../components/PostsToggle";
+import "../../index.css"
 
 const Profile = () => {
     // Mocked user data
@@ -24,7 +25,7 @@ const Profile = () => {
         { id_publication: 4, textarea_publication: "A new post added dynamically.", date_time_publication: "2024-07-09 09:00:00" },
         { id_publication: 5, textarea_publication: "One more post for the list.", date_time_publication: "2024-07-09 10:00:00" },
         { id_publication: 6, textarea_publication: "And Another.", date_time_publication: "2024-07-09 11:00:00" },
-        { id_publication: 7, textarea_publication: "And Another again.", date_time_publication: "2024-07-09 12:00:00" },
+        { id_publication: 7, textarea_publication: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", date_time_publication: "2024-07-09 12:00:00" },
     ]);
 
     // State to manage showing more posts
@@ -45,12 +46,21 @@ const Profile = () => {
         return publications.slice(-3).reverse(); // Reverse to display latest first
     };
 
+    // Function to truncate text to show only a few words followed by "..."
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        const truncatedText = text.substr(0, maxLength);
+        return `${truncatedText.substr(0, truncatedText.lastIndexOf(" "))}...`;
+    };
+
     return (
         <>
             <div className="border">
                 <Navbar />
             </div>
-            <div className="flex flex-col items-start justify-center min-h-screen mx-auto p-4 w-full xl:w-2/3">
+            <div className="flex flex-col items-start justify-center min-h-screen mx-auto p-4 w-full xl:w-2/3 mt-20">
                 {/* Profile Header */}
                 <div className="w-full mb-6">
                     {/* Cover pic */}
@@ -67,31 +77,31 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-
+                
                 {/* Badges, contributions, and posts */}
                 <div className="mx-8">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-0 w-full">
-                        <div className="rounded-lg bg-white border border-gray-300 shadow-md p-4">
-                            <span className="font-semibold text-teal-800 border-b border-teal-800 inline-block mb-2">
+                        <div className="profile-box">
+                            <span className="profile-box-title">
                                 Badges
                             </span>
                         </div>
 
-                        <div className="rounded-lg bg-white border border-gray-300 shadow-md p-4">
-                            <span className="font-semibold text-teal-800 border-b border-teal-800 inline-block mb-2">
+                        <div className="profile-box">
+                            <span className="profile-box-title">
                                 Contribution
                             </span>
                         </div>
 
-                        <div className="rounded-lg bg-white border border-gray-300 shadow-md p-4">
-                            <span className="font-semibold text-teal-800 border-b border-teal-800 inline-block mb-2">
+                        <div className="profile-box">
+                            <span className="profile-box-title">
                                 Mes posts
                             </span>
                             <ul>
                                 {getLastThreePosts().map(publication => (
                                     <li key={publication.id_publication} className="mb-2">
                                         <div className="font-semibold">
-                                            {publication.textarea_publication}
+                                            {truncateText(publication.textarea_publication, 50)}
                                         </div>
                                         <div className="text-gray-600 text-sm">
                                             {publication.date_time_publication}
@@ -99,14 +109,17 @@ const Profile = () => {
                                     </li>
                                 ))}
                             </ul>
+                            <div className="flex justify-end">
                             {publications.length > 3 && (
-                                <button
-                                    className="mt-2 bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600"
-                                    onClick={toggleShowMorePosts}
-                                >
-                                    Montrer plus
-                                </button>
+                                 <div
+                                 className="more-details"
+                                 onClick={toggleShowMorePosts}
+                             >
+                                →Tous vos posts
+                             </div>
+                            
                             )}
+                            </div>
                         </div>
                     </div>
                 </div>
