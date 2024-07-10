@@ -129,8 +129,10 @@ CREATE TABLE PUBLICATION_LIKE (
 ▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE CHAT (
     id_chat INT PRIMARY KEY AUTO_INCREMENT,
+    id_user_chat_creator int not null , 
     date_time_debut_chat DATETIME DEFAULT NOW(),
-    type_chat VARCHAR(6) DEFAULT 'priver'
+    type_chat VARCHAR(6) DEFAULT 'priver' , 
+    constraint fk_chat_user_creator foreign key (id_user_chat_creator) references user(id_user) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
 
@@ -197,6 +199,8 @@ CREATE TABLE EVENT_USER (
 ▂ ▃ ▄ ▅ ▆ ▇ █ █ ▇ ▆ ▅ ▄ ▃ ▂
 CREATE TABLE ACTIVITE (
     id_activite INT PRIMARY KEY AUTO_INCREMENT,
+    date_debut_activite date not null ,
+    heure_debut_activite time not null , 
     description_activite VARCHAR(255) NOT NULL
 );
 

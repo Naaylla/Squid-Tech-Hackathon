@@ -16,10 +16,10 @@ const add_like = async (req, res) => {
 
 // Supprimer un like
 const delete_like = async (req, res) => {
-    const { id } = req.params;
+    const { id_like } = req.params;
     const sql = 'DELETE FROM `LIKE` WHERE id_like = ?';
 
-    connexion.query(sql, [id], (err, result) => {
+    connexion.query(sql, [id_like], (err, result) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la suppression du like" });
         }
@@ -29,7 +29,8 @@ const delete_like = async (req, res) => {
 
 // Mettre à jour un like
 const update_like = async (req, res) => {
-    const { id_like, id_user } = req.body;
+    const { id_like } = req.params;
+    const { id_user } = req.body;
     const sql = 'UPDATE `LIKE` SET id_user = ? WHERE id_like = ?';
     const values = [id_user, id_like];
 
@@ -55,10 +56,10 @@ const get_all_like = async (req, res) => {
 
 // Obtenir un like par son ID
 const get_like = async (req, res) => {
-    const { id } = req.params;
+    const { id_like } = req.params;
     const sql = 'SELECT * FROM `LIKE` WHERE id_like = ?';
 
-    connexion.query(sql, [id], (err, rows) => {
+    connexion.query(sql, [id_like], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection du like" });
         }

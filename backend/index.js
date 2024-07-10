@@ -134,9 +134,9 @@ app.use('/chat/user', router_chat_user)
 // routes des discussions
 app.use('/chat', router_chat)
 // routes des likes d'un commentaire
-app.use('/comment/likes', router_commentaire_like)
+app.use('/commentaire/likes', router_commentaire_like)
 // routes des commentaires
-app.use('/comment', router_commmentaire)
+app.use('/commentaire', router_commmentaire)
 // routes des activités d'un evenement
 app.use('/event/activities', router_event_activite)
 // routes des utilisateurs participant a un evenement
@@ -152,7 +152,7 @@ app.use('/friend', router_friend)
 // routes des impacts
 app.use('/impact', router_impact)
 // routes des likes
-app.use('/likes', router_like)
+app.use('/like', router_like)
 // routes des messages
 app.use('/message', router_message)
 // routes des fichiers d'une publication
