@@ -66,7 +66,7 @@ const Profile = () => {
                     {/* Cover pic */}
                     <div className="bg-teal-900 h-32 w-full -mb-8 rounded-lg shadow-md"></div>
                     {/* Profile picture */}
-                    <div className="flex items-center z-40 grid grid-rows-2 grid-flow-col">
+                    <div className="flex items-center z-10 grid grid-rows-2 grid-flow-col">
                         <div className="h-20 w-20 bg-teal-100 rounded-full shadow-md ml-8"></div>
                         <div className="mt-5">
                             {/* User info */}

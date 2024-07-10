@@ -6,6 +6,10 @@
 body {
   background: #ffffff;
   font-family: 'Inter';
+  height: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 /* Boites de profiles (infos) */
