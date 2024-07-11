@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import PostsToggle from "../../components/PostsToggle";
 import axios from "axios";
 import "../../index.css";
+import Chat from "../../components/Chat";
 
 const Profile = () => {
     const [userData, setUserData] = useState({
@@ -25,7 +26,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const userId = sessionStorage.getItem("ss_id_user");
+                const userId = sessionStorage.getItem("ss_user_id");
                 if (!userId) {
                     throw new Error("User ID not found in sessionStorage");
                 }
@@ -36,6 +37,13 @@ const Profile = () => {
                     throw new Error("User data not found");
                 }
                 const userDataFromApi = userDataResponse.data.data[0]; // Assuming data is an array
+
+                // Format the birthDate to "yyyy-MM-dd"
+                const formattedBirthDate = new Date(userDataFromApi.date_naissance_user).toISOString().split("T")[0];
+
+                //Format the formattedBirthDate to "dd/MM/yyyy"
+                const finalFormattedBirthDate = formattedBirthDate.split('-').reverse().join('/');
+
                 setUserData({
                     firstName: userDataFromApi.firstname_user || "",
                     lastName: userDataFromApi.lastname_user || "",
@@ -45,7 +53,7 @@ const Profile = () => {
                     commune: userDataFromApi.commune_user || "",
                     phoneNumber: userDataFromApi.telephone_user || "",
                     gender: userDataFromApi.gender_user || "",
-                    birthDate: userDataFromApi.date_naissance_user || "",
+                    birthDate: finalFormattedBirthDate || "",
                     registrationDate: userDataFromApi.date_time_inscription_user || ""
                 });
 
@@ -93,21 +101,93 @@ const Profile = () => {
         return new Date(isoDate).toLocaleDateString("fr-FR", options);
     };
 
+    const handleFileUpload = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Example endpoint for uploading the file
+            const uploadResponse = await axios.post("http://localhost:8000/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+
+            console.log("File uploaded successfully:", uploadResponse.data);
+            // Optionally, update user data or perform any other actions upon successful upload
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            // Handle error as needed
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="border">
                 <Navbar />
             </div>
+            <Chat></Chat>
             <div className="flex flex-col items-start justify-center min-h-screen mx-auto p-4 w-full xl:w-2/3">
                 <div className="mt-20 mr-5 ml-5">
                     {/* Profile Header */}
-                    <div className="w-full mb-6">
+                    <div className="w-full mb-6 relative">
                         {/* Cover pic */}
-                        <div className="bg-teal-900 h-32 w-full -mb-8 rounded-lg shadow-md"></div>
+                        <div className="bg-teal-900 h-32 w-full -mb-8 rounded-lg shadow-md">
+                            {/* Upload button for cover pic */}
+                            <label
+                                htmlFor="coverPicUpload"
+                                className="absolute right-4 bottom-4 bg-white rounded-full p-2 cursor-pointer"
+                            >
+                                <svg
+                                    className="w-6 h-6 text-teal-800"
+                                    fill="none"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                <input
+                                    id="coverPicUpload"
+                                    type="file"
+                                    className="hidden"
+                                    onChange={handleFileUpload}
+                                />
+                            </label>
+                        </div>
                         {/* Profile picture */}
-                        <div className="flex items-center z-10 grid grid-rows-2 grid-flow-col">
-                            <div className="h-20 w-20 bg-teal-100 rounded-full shadow-md ml-8"></div>
-                            <div className="mt-5">
+                        <div className="flex items-center z-10 grid grid-rows-2 grid-flow-col mt-4">
+                            <div className="h-20 w-20 bg-teal-100 rounded-full shadow-md ml-8 relative">
+                                {/* Upload button for profile pic */}
+                                <label
+                                    htmlFor="profilePicUpload"
+                                    className="absolute right-0 bottom-0 bg-white rounded-full p-2 cursor-pointer"
+                                >
+                                    <svg
+                                        className="w-6 h-6 text-teal-800"
+                                        fill="none"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    <input
+                                        id="profilePicUpload"
+                                        type="file"
+                                        className="hidden"
+                                        onChange={handleFileUpload}
+                                    />
+                                </label>
+                            </div>
+                            <div className="mt-5 ml-4">
                                 {/* User info */}
                                 <div className="font-bold text-xl text-black">
                                     {userData.firstName} {userData.lastName.charAt(0)}.
@@ -171,6 +251,7 @@ const Profile = () => {
                     <PostsToggle posts={publications.slice().reverse()} onClose={closePostsToggle} />
                 )}
             </div>
+            
         </div>
     );
 };

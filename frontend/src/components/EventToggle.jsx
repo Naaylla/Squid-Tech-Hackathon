@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-const PostsToggle = ({ posts, onClose }) => {
+const EventToggle = ({ posts, onClose }) => {
     const toggleRef = useRef(null);
 
     // Function to handle clicks outside the toggle
@@ -52,4 +52,4 @@ const PostsToggle = ({ posts, onClose }) => {
     );
 };
 
-export default PostsToggle;
+export default EventToggle;

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from 'react-google-recaptcha';
 import api from '../api';
+
 function LoginForm() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -10,15 +11,17 @@ function LoginForm() {
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const [captchaValue, setCaptchaValue] = useState(null);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'email') setEmail(value);
         if (name === 'password') setPassword(value);
     };
+
     const handleCaptchaChange = (value) => {
+        console.log(value);
         setCaptchaValue(value);
     };
-
 
     async function submit(e) {
         e.preventDefault();
@@ -31,8 +34,11 @@ function LoginForm() {
                 recaptchaToken: captchaValue
             });
             console.log('response', response);
+
             if (response.status === 200) {
                 setErrorMessage('');
+                const userId = response.data.user.id_user;
+                sessionStorage.setItem('ss_user_id', userId);
                 navigate("/home", { state: { id: email } });
             } else {
                 setErrorMessage(response.data.message || "Échec de l'inscription");

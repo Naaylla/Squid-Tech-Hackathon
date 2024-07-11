@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import Chat from "../../components/Chat";
 
 const Evenements = () => {
   const [events, setEvents] = useState([]);
@@ -31,8 +32,14 @@ const Evenements = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
+    
+            <div className="border">
+                <Navbar />
+            </div>
+            <Chat></Chat>
+      
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      
         <div className="mt-20 mr-5 ml-5">
           <h1 className="text-3xl font-bold text-gray-800 mb-8 justify-start">Évènements</h1>
           <div className="justify-end mb-4">
@@ -40,7 +47,7 @@ const Evenements = () => {
               Créer un évènement
             </button>
           </div>
-
+          
           {/* Event Cards Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
@@ -64,9 +71,8 @@ const Evenements = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-teal-600 font-bold">Max participants: {event.max_user}</span>
                     <div className="more-details">
-                      {/* onClick: if token in session storage, redirection a la page de l'event, sinon Utiliser routes axios.get_event */}
-                      → Plus d'informations
-                    </div>
+                                            → Plus d'informations
+                                        </div>
                   </div>
                 </div>
               </div>
