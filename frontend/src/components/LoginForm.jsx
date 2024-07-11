@@ -19,23 +19,21 @@ function LoginForm() {
         setCaptchaValue(value);
     };
 
+
     async function submit(e) {
         e.preventDefault();
         setSubmitted(true);
 
         try {
-            const response=
-            api.post('/auth/login', {
+            const response = await api.post('/auth/login', {
                 email: email,
                 password: password,
                 recaptchaToken: captchaValue
             });
-            
-            if (response.data.success) {
+            console.log('response', response);
+            if (response.status === 200) {
                 setErrorMessage('');
-                setTimeout(() => {
-                    navigate("/home", { state: { id: email } });
-                }, 2000);
+                navigate("/home", { state: { id: email } });
             } else {
                 setErrorMessage(response.data.message || "Échec de l'inscription");
             }
