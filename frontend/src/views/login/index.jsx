@@ -5,6 +5,7 @@ import { TERipple } from "tw-elements-react";
 
 export default function Login() {
 
+
     const google = () => {
         window.open("http://localhost:8000/auth/google", "_self");
     };
@@ -19,6 +20,7 @@ export default function Login() {
                         S’inscrire
                     </Link>
                 </p>
+
                 <Form />
                 <p className="text-xs"><a href="">Mot de passe oublié ?</a></p>
                 <div className="my-4 w-full flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
@@ -77,6 +79,7 @@ export default function Login() {
                     </TERipple>
                 </div>
             </div>
+
         </div>
     );
 }

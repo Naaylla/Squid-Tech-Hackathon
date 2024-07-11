@@ -55,9 +55,22 @@ const get_all_message = async (req, res) => {
 };
 
 // Obtenir les messages d'un utilisateurs par son ID
-const get_message = async (req, res) => {
-    const { id_message } = req.params;
-    const sql = 'SELECT * FROM MESSAGE WHERE id_message = ?';
+const get_message_user = async (req, res) => {
+    const { id_user } = req.params;
+    const sql = 'SELECT * FROM MESSAGE WHERE id_user = ?';
+
+    connexion.query(sql, [id_user], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ data: err, message: "Erreur lors de la sélection du message" });
+        }
+        res.status(200).json({ data: rows[0], message: "Sélectionné avec succès" });
+    });
+};
+
+// Obtenir les message d'un chat specifique
+const get_message_chat = async (req, res) => {
+    const { id_chat } = req.params;
+    const sql = 'SELECT * FROM MESSAGE WHERE id_chat = ?';
 
     connexion.query(sql, [id_message], (err, rows) => {
         if (err) {
@@ -74,5 +87,6 @@ module.exports = {
     delete_message,
     update_message,
     get_all_message,
-    get_message
+    get_message_chat,
+    get_message_user
 };
