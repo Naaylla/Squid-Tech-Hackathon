@@ -6,7 +6,7 @@ import LineChart2 from "../../components/Linechart2";
 import Navbar from "../../components/Navbar";
 import Chat from "../../components/Chat";
 
-export default function Login() {
+export default function Dashboard() {
     return (
         <>
         <div className="border">

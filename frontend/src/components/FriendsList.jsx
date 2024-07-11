@@ -1,38 +1,39 @@
 import React from "react";
 
-export default function FriendsList() {
+export default function FriendsList({ onClose }) {
   const friends = [
     {
       id: 1,
       name: "John Doe",
       status: "Online",
-      avatar: "https://via.placeholder.com/40"
+      avatar: "../src/assets/user-circle.svg"
     },
     {
       id: 2,
       name: "Jane Smith",
       status: "Offline",
-      avatar: "https://via.placeholder.com/40"
+      avatar: "../src/assets/user-circle.svg"
     },
     {
       id: 3,
       name: "Michael Brown",
       status: "Busy",
-      avatar: "https://via.placeholder.com/40"
+      avatar: "../src/assets/user-circle.svg"
     },
     {
       id: 4,
       name: "Emily Johnson",
       status: "Away",
-      avatar: "https://via.placeholder.com/40"
+      avatar: "../src/assets/user-circle.svg"
     }
   ];
 
   return (
     <div className="absolute right-0 top-full mt-2 bg-white shadow-md rounded-md p-4 z-30 w-80">
       <div className="flex items-center justify-between mb-4">
+      <p className="text-black mr-2">Friends list</p>
         <h3 className="text-lg font-semibold">Friends List</h3>
-        <button className="text-gray-500">
+        <button onClick={onClose} className="text-gray-500">
           <svg
             className="w-5 h-5"
             fill="none"
@@ -44,11 +45,11 @@ export default function FriendsList() {
           </svg>
         </button>
       </div>
-      <div className="mb-4">
+      <div className="flex items-center mb-4">
         <input
           type="text"
           placeholder="Rechercher"
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="flex-1 p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div className="space-y-4">
