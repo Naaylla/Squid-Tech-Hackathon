@@ -1,16 +1,35 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Login from "./views/login";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Home from "./views/home";
-import Signup from "./views/signup";
+import Signup from "./views/auth/signup";
+import Login from "./views/auth/login";
+import Reset from "./views/auth/reset";
+import Verify from "./views/auth/verify"
+import Profile from "./views/profile";
+import Evenements from "./views/evenements";
+import Dashboard from "./views/dashboard";
+import "./index.css";
 
 const Routers = () => {
+  const location = useLocation();
+
   return (
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/signup" element={<Signup />}></Route>
-      <Route path="/login" element={<Login />}></Route>
-    </Routes>
+    <TransitionGroup>
+      <CSSTransition key={location.key} classNames="page" timeout={300}>
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<Reset />} />
+          <Route path="/verify-code" element={<Verify />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/evenements" element={<Evenements />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+        
+      </CSSTransition>
+    </TransitionGroup>
   );
 };
 

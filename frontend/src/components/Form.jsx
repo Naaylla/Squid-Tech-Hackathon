@@ -54,7 +54,7 @@ function Form() {
                 </div>
                 <button
                     type="submit"
-                    className="py-4 w-full border border-gray-300 rounded border-gray-300 rounded "
+                    className="py-4 w-full border border-gray-300 rounded "
                 >
                     Connexion
                 </button>
