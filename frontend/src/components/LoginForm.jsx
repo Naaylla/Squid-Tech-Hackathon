@@ -20,28 +20,24 @@ function LoginForm() {
         setSubmitted(true);
 
         try {
-            const response = await axios.post("http://localhost:5000/auth/signup", {
+            const response = await api.post("users/add", {
                 email: email,
                 password: password,
             });
 
-            if (response.data.success) {
-                setErrorMessage('');
-                setTimeout(() => {
-                    navigate("/home", { state: { id: email } });
-                }, 2000);
-            } else {
-                setErrorMessage(response.data.message || "Échec de l'inscription");
-            }
+            console.log(response);
+            navigate("/home", { state: { id: email } });
+
+
         } catch (e) {
-            const errorResponse = e.response?.data?.message || "Une erreur s'est produite";
+            const errorResponse = e.response?.data?.message || "Email ou mot de passe invalide.";
             setErrorMessage(errorResponse);
             console.log(e);
+
         } finally {
-            setSubmitted(false); // Reset submitted state after request completes
+            setSubmitted(false);
         }
     }
-
     return (
         <div className="flex flex-col items-center w-full">
             <form onSubmit={submit} className="flex flex-col items-center justify-center w-full lg:px-2 md:px-2 sm:px-22 mt-2">

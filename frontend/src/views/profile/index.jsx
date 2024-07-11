@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FormUser from "../../components/FormUser";
+import FormUser from "../../components/UserForm";
 import Navbar from "../../components/Navbar";
 import PostsToggle from "../../components/PostsToggle";
 import axios from "axios";
