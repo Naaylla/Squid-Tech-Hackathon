@@ -13,8 +13,7 @@ const connexion = mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME || "recyclage",
-    connectTimeout: 10000 // 10 seconds timeout
+    database: process.env.DB_NAME || "recyclage"
 });
 
 connexion.connect((err) => {
