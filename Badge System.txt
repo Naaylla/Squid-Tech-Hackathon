@@ -1,0 +1,26 @@
+tri : novice du tri, trieur amateur, Pro du tri
+recyclage : recycleur junior, apprenti du recyclage, Champion de recyclage
+écologie : Petit Ecolo, Ecolo Accompli, Super Ecolo
+Nature : Guardien de la nature (lol)
+User-related : (only based on points) Débutant, Amateur, Pro, Maitre, Senior
+
+A l'inscription, le score général de l'utilisateur est à 0, il a 0 badge.
+Il a trois sous scores :
+-> Tri : relatif au tri des dechets, et collecte
+-> Recyclage : relatif à des évènements de recyclage
+-> Ecologie 
+-> Nature
+
+Comment le score augmente :
+---------------------------
+
+publication = 10 points par publication
+post-participation (CONFIRMEE) à un évènement = 
+-> fixé par un modérateur après avoir analysé l'importance, la difficulté, et les thèmes (tri, recyclage, écologie, nature) : 50 points OU 100 points OU 150 points
+
+
+
+Manière alternative :
+---------------------
+Panel de création de badge au niveau de l'admin : il pourra créer les badge qu'il veut
+
