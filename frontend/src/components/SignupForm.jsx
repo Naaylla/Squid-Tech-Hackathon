@@ -66,7 +66,7 @@ function SignupForm() {
 
     return (
         <div className="flex flex-col items-center w-full max-w-2xl p-4 bg-white rounded-lg">
-            <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+            <form onSubmit={submit} className=" grid-cols-1 md:grid-cols-2 gap-4 w-full">
                 <h2 className="col-span-2 text-2xl text-black font-semibold mt-4">Informations de Compte</h2>
                 <div className="col-span-2">
                     <input
@@ -199,7 +199,7 @@ function SignupForm() {
                 <div className="col-span-2 mt-4">
                     <button
                         type="submit"
-                        className={`py-2 w-full border border-2 border-blue-500 text-blue-500 rounded-md bg-white hover:bg-blue-500 hover:text-white transition ease-in duration-300 ${submitted || !captchaValue ? 'opacity-50 pointer-events-none' : ''}`}
+                        className={`py-2 w-full  border-2 border-blue-500 text-blue-500 rounded-md bg-white hover:bg-blue-500 hover:text-white transition ease-in duration-300 ${submitted || !captchaValue ? 'opacity-50 pointer-events-none' : ''}`}
                         disabled={submitted || !captchaValue}
                     >
                         {submitted ? 'Inscription en cours...' : 'S\'inscrire'}

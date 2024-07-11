@@ -28,6 +28,8 @@ const Routers = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/evenements" element={<Evenements />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/landing" element={<LandingPage/>} />
+          
         </Routes>
       </CSSTransition>
     </TransitionGroup>

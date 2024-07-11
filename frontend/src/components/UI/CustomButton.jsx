@@ -9,7 +9,7 @@ const CustomButton = ({ text, imageSrc, href, className }) => {
         </>
     );
 
-    const baseClasses = "text-white bg-[#ff4700] hover:bg-[#e64500] font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center justify-center transition ease-in duration-300";
+    const baseClasses = "text-white bg-[#31AC53] hover:bg-[#27763D] font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center justify-center transition ease-in duration-300";
     const combinedClasses = `${baseClasses} ${className}`;
 
     return href ? (
