@@ -79,11 +79,25 @@ const get_user_publication = async (req, res) => {
         res.status(200).json({ data: rows, message: "Publications sélectionné avec succès" });
     });
 };
+// Obtenir toutes les publications d'un utilisateur
+const get_user_publications = async (req, res) => {
+    const { id_user } = req.params;
 
+    // Query to select publications by user id
+    const sql = 'SELECT * FROM publication WHERE id_user = ?';
+
+    connexion.query(sql, [id_user], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ data: [], message: "Erreur lors de la sélection des publications de l'utilisateur" });
+        }
+        res.status(200).json({ data: rows, message: "Publications de l'utilisateur sélectionnées avec succès" });
+    });
+};
 module.exports = {
     add_publication,
     delete_publication,
     update_publication,
     get_all_publication,
-    get_publication
+    get_publication,
+    get_user_publications
 };
