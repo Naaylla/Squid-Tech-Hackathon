@@ -68,7 +68,7 @@ function LoginForm() {
                     />
                 </div>
 
-                <div className='h-4 mt-1 flex items-center justify-center'>
+                <div className='h-2 mt-1 flex items-center justify-center'>
                     {errorMessage && (
                         <p className="text-red-500 text-bold text-sm flex-shrink-0">{errorMessage}</p>
                     )}
@@ -78,7 +78,7 @@ function LoginForm() {
                     type="submit"
                     className={`py-2 w-full mt-4 border border-2 border-BlueBorder text-darkBlue rounded bg-white hover:bg-[#021d49] cursor-pointer hover:text-white transition ease-in duration-300 ${submitted ? 'opacity-50 pointer-events-none' : ''}`}
                 >
-                    {submitted ? 'Inscription en cours...' : 'S\'inscrire'}
+                    {submitted ? 'Connexion en cours...' : 'Se connecter'}
                 </button>
             </form>
         </div>

@@ -92,12 +92,11 @@ function SignupForm() {
                     />
                 </div>
 
-                <div className='h-4 mt-1 flex items-center justify-center'>
+                <div className='h-2 mt-1 flex items-center justify-center'>
                     {errorMessage && (
                         <p className="text-red-500 text-bold text-sm flex-shrink-0">{errorMessage}</p>
                     )}
                 </div>
-
                 <ReCAPTCHA
                     sitekey="6LcG_woqAAAAAKbNYsIw3-QtnbW3aZnTN5n6XOSW"
                     onChange={handleCaptchaChange}
@@ -111,6 +110,9 @@ function SignupForm() {
                 >
                     {submitted ? 'Inscription en cours...' : 'S\'inscrire'}
                 </button>
+
+
+
             </form>
         </div>
     );
