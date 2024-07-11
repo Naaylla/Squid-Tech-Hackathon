@@ -59,7 +59,7 @@ const get_message_user = async (req, res) => {
     const { id_user } = req.params;
     const sql = 'SELECT * FROM MESSAGE WHERE id_user = ?';
 
-    connexion.query(sql, [id_message], (err, rows) => {
+    connexion.query(sql, [id_user], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection du message" });
         }
