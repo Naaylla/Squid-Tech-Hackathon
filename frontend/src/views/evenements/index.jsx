@@ -27,9 +27,9 @@ const Evenements = () => {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="mt-20 mr-5 ml-5">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">Évènements à venir</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-8 justify-start">Évènements à venir</h1>
           <div className="justify-end mb-4">
-            <button className="classic-button">
+            <button className=" justify-end mb-4 classic-button">
               Créer un évènement
             </button>
           </div>

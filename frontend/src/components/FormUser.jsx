@@ -1,7 +1,3 @@
-
-import React, { useState, useEffect } from "react";
-
-// Define the list of countries (assuming it will be populated dynamically)
 const liste_pays = [
     "Afghanistan", "Afrique du Sud", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", 
     "Antigua-et-Barbuda", "Arabie saoudite", "Argentine", "Arménie", "Australie", "Autriche", 
@@ -30,6 +26,7 @@ const liste_pays = [
     "Tchad", "Thaïlande", "Timor oriental", "Togo", "Tonga", "Trinité-et-Tobago", "Tunisie", "Turkménistan", 
     "Turquie", "Tuvalu", "Ukraine", "Uruguay", "Vanuatu", "Vatican", "Venezuela", "Viêt Nam", "Yémen", "Zambie", "Zimbabwe"
 ];
+import React, { useState, useEffect } from "react";
 
 const FormUser = ({ initialData, updateUserData }) => {
   const [formData, setFormData] = useState(initialData);
@@ -37,15 +34,18 @@ const FormUser = ({ initialData, updateUserData }) => {
   const [formModified, setFormModified] = useState(false);
 
   useEffect(() => {
-    // Check if the form data has been modified
+    setFormData(initialData);
+  }, [initialData]);
+
+  useEffect(() => {
     const isFormModified =
-      formData.firstName !== initialData.firstname_user ||
-      formData.lastName !== initialData.lastname_user ||
-      formData.email !== initialData.email_user ||
-      formData.phoneNumber !== initialData.telephone_user ||
-      formData.country !== initialData.pays_user ||
-      formData.gender !== initialData.gender_user ||
-      formData.address !== initialData.commune_user;
+      formData.firstName !== initialData.firstName ||
+      formData.lastName !== initialData.lastName ||
+      formData.email !== initialData.email ||
+      formData.phoneNumber !== initialData.phoneNumber ||
+      formData.country !== initialData.country ||
+      formData.gender !== initialData.gender ||
+      formData.commune !== initialData.commune;
 
     setFormModified(isFormModified);
   }, [formData, initialData]);
@@ -71,7 +71,6 @@ const FormUser = ({ initialData, updateUserData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate form fields
     if (
       formData.firstName.trim() === "" ||
       formData.lastName.trim() === "" ||
@@ -79,40 +78,36 @@ const FormUser = ({ initialData, updateUserData }) => {
       formData.phoneNumber.trim() === "" ||
       formData.country.trim() === "" ||
       formData.gender.trim() === "" ||
-      formData.address.trim() === ""
+      formData.commune.trim() === ""
     ) {
       alert("Veuillez remplir tous les champs.");
       return;
     }
 
-    // Validate phone number format
     if (isNaN(formData.phoneNumber)) {
       alert("Le numéro de téléphone doit être numérique.");
       return;
     }
 
-    // Validate name format with regex
-    const nameRegex = /^[a-zA-ZÀ-ÿ]+(?:-[a-zA-ZÀ-ÿ]+)?(?: [a-zA-ZÀ-ÿ]+(?:-[a-zA-ZÀ-ÿ]+)?)?$/;
-    if (!nameRegex.test(formData.firstName) || !nameRegex.test(formData.lastName)) {
-      alert("Le prénom et le nom doivent contenir des caractères alphabétiques");
-      return;
-    }
-
-    // Check if any modifications were made
-    if (!formModified) {
-      return;
-    }
-
-    // Update user data
     updateUserData(formData);
-
-    // Show confirmation message
     setShowConfirmation(true);
-
     setTimeout(() => {
       setShowConfirmation(false);
     }, 3000);
   };
+
+  const formatBirthDate = (isoDate) => {
+    if (!isoDate) return ""; // Handle case where date might be empty
+    const dateParts = isoDate.split("-");
+    if (dateParts.length !== 3) return ""; // Ensure ISO date format has three parts
+  
+    const year = dateParts[0];
+    const month = dateParts[1];
+    const day = dateParts[2];
+  
+    return `${day}/${month}/${year}`;
+  };
+  
 
   return (
     <form className="w-full mx-auto my-0 p-3 bg-white" onSubmit={handleSubmit}>
@@ -128,6 +123,7 @@ const FormUser = ({ initialData, updateUserData }) => {
             value={formData.firstName}
             onChange={handleInputChange}
             className="field-content"
+            required
           />
         </div>
         <div>
@@ -141,6 +137,7 @@ const FormUser = ({ initialData, updateUserData }) => {
             value={formData.lastName}
             onChange={handleInputChange}
             className="field-content"
+            required
           />
         </div>
       </div>
@@ -156,6 +153,7 @@ const FormUser = ({ initialData, updateUserData }) => {
             value={formData.email}
             onChange={handleInputChange}
             className="field-content"
+            required
           />
         </div>
         <div>
@@ -169,7 +167,43 @@ const FormUser = ({ initialData, updateUserData }) => {
             value={formData.phoneNumber}
             onChange={handleInputChange}
             className="field-content"
+            required
           />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <div>
+          <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+            Date de naissance
+          </label>
+          <input
+  type="date"
+  id="birthDate"
+  name="birthDate"
+  value={formatBirthDate(formData.birthDate)}
+  onChange={handleInputChange}
+  className="field-content"
+  required
+/>
+
+        </div>
+        <div>
+          <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
+            Sexe
+          </label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
+            className="field-content"
+            required
+          >
+            <option value="">-- Sélectionner --</option>
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+            <option value="autre">Autre</option>
+          </select>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 mt-4">
@@ -183,10 +217,12 @@ const FormUser = ({ initialData, updateUserData }) => {
             value={formData.country}
             onChange={handleInputChange}
             className="field-content"
+            required
           >
             <option value="" disabled>
               -- Sélectionner --
             </option>
+            {/* Replace with your actual list of countries */}
             {liste_pays.map((pays) => (
               <option key={pays} value={pays.replace(/\s+/g, "-")}>
                 {pays}
@@ -195,36 +231,17 @@ const FormUser = ({ initialData, updateUserData }) => {
           </select>
         </div>
         <div>
-          <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-            Sexe
-          </label>
-          <select
-            id="gender"
-            name="gender"
-            value={formData.gender}
-            onChange={handleInputChange}
-            className="field-content"
-            disabled
-          >
-            <option value="">-- Sélectionner --</option>
-            <option value="Homme">Homme</option>
-            <option value="Femme">Femme</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
-      </div>
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <div className="col-span-2 sm:col-span-1">
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-            Adresse
+          <label htmlFor="commune" className="block text-sm font-medium text-gray-700">
+            Commune/Ville
           </label>
           <input
             type="text"
-            id="address"
-            name="address"
-            value={formData.address}
+            id="commune"
+            name="commune"
+            value={formData.commune}
             onChange={handleInputChange}
             className="field-content"
+            required
           />
         </div>
       </div>
@@ -247,4 +264,5 @@ const FormUser = ({ initialData, updateUserData }) => {
 };
 
 export default FormUser;
+
 

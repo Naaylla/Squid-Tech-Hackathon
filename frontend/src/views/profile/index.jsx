@@ -12,11 +12,8 @@ const Profile = () => {
     email: "",
     username: "",
     country: "",
-    address: "",
+    commune: "",
     phoneNumber: "",
-    status: "",
-    role: "",
-    score: 0.0,
     gender: "",
     birthDate: "",
     registrationDate: ""
@@ -38,18 +35,15 @@ const Profile = () => {
         if (!userDataResponse.data || !userDataResponse.data.data) {
           throw new Error("User data not found");
         }
-        const userDataFromApi = userDataResponse.data.data;
+        const userDataFromApi = userDataResponse.data.data[0]; // Assuming data is an array
         setUserData({
           firstName: userDataFromApi.firstname_user || "",
           lastName: userDataFromApi.lastname_user || "",
           email: userDataFromApi.email_user || "",
           username: userDataFromApi.username_user || "",
           country: userDataFromApi.pays_user || "",
-          address: userDataFromApi.commune_user || "",
+          commune: userDataFromApi.commune_user || "",
           phoneNumber: userDataFromApi.telephone_user || "",
-          status: userDataFromApi.status_user || "",
-          role: userDataFromApi.role_user || "",
-          score: userDataFromApi.score_user || 0.0,
           gender: userDataFromApi.gender_user || "",
           birthDate: userDataFromApi.date_naissance_user || "",
           registrationDate: userDataFromApi.date_time_inscription_user || ""
@@ -92,6 +86,11 @@ const Profile = () => {
     }
     const truncatedText = text.substr(0, maxLength);
     return `${truncatedText.substr(0, truncatedText.lastIndexOf(" "))}...`;
+  };
+
+  const formatDate = (isoDate) => {
+    const options = { hour: "numeric", minute: "numeric", day: "numeric", month: "long", year: "numeric" };
+    return new Date(isoDate).toLocaleDateString("fr-FR", options);
   };
 
   return (
@@ -142,7 +141,7 @@ const Profile = () => {
                           : truncateText(publication.textarea_publication, 50)}
                       </div>
                       <div className="text-gray-600 text-sm">
-                        {publication.date_time_publication}
+                        {formatDate(publication.date_time_publication)}
                       </div>
                     </li>
                   </ul>
