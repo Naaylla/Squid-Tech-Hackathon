@@ -16,10 +16,11 @@ const add_friend = async (req, res) => {
 
 // Supprimer un ami
 const delete_friend = async (req, res) => {
-    const { id } = req.params;
-    const sql = 'DELETE FROM FRIEND WHERE id_friend_sender = ? OR id_friend_receiver = ?';
+    const { id_friend_sender, id_friend_receiver } = req.body;
+    const sql = 'DELETE FROM FRIEND WHERE id_friend_sender = ? AND id_friend_receiver = ?';
+    const values = [id_friend_sender, id_friend_receiver];
 
-    connexion.query(sql, [id, id], (err, result) => {
+    connexion.query(sql, values, (err, result) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la suppression de l'ami" });
         }
@@ -27,40 +28,60 @@ const delete_friend = async (req, res) => {
     });
 };
 
-// Mettre à jour un ami
+// Mettre à jour une demande d'amis pour accepeter la demande 
 const update_friend = async (req, res) => {
     const { id_friend_sender, id_friend_receiver } = req.body;
-    const sql = 'UPDATE FRIEND SET id_friend_sender = ?, id_friend_receiver = ? WHERE id_friend_sender = ? AND id_friend_receiver = ?';
     const { id } = req.params;
-    const values = [id_friend_sender, id_friend_receiver, id, id];
+    const sql = 'UPDATE FRIEND SET date_time_friend_accepted = NOW() WHERE id_friend_sender = ? AND id_friend_receiver = ?';
+    const values = [id_friend_sender, id_friend_receiver];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la modification de l'ami" });
         }
-        res.status(200).json({ data: result, message: "Modifié avec succès" });
+        res.status(200).json({ data: result, message: "Amis ajouter" });
     });
 };
 
-// Obtenir tous les amis de la liste 
+
+// Obtenir toutes les demandes d'amis 
 const get_all_friend = async (req, res) => {
-    const sql = 'SELECT * FROM FRIEND';
-    connexion.query(sql, [id], (err, rows) => {
+    const { id_friend_sender } = req.params
+    const sql = 'SELECT * FROM FRIEND where id_friend_sender = ?';
+    connexion.query(sql, [id_friend_sender], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection des amis" });
+        }
+        res.status(200).json({ data: rows, message: "Demande d'amis selectionner avec succès" });
+    });
+};
+
+
+// Obtenir les demandes d'amis qui sont accepter
+const get_friend_accepted_request = async (req, res) => {
+    const { id_friend_sender } = req.params;
+    const sql = 'SELECT * FROM FRIEND WHERE id_friend_receiver = ? AND date_time_friend_accepted IS NOT NULL';
+    connexion.query(sql, [id_friend_sender], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ data: err, message: "Erreur lors de la sélection de l'ami" });
+        }
+        if (rows.length === 0) {
+            return res.status(200).json({ message: "Aucune demande accepter" });
         }
         res.status(200).json({ data: rows, message: "Sélectionné avec succès" });
     });
 };
 
-// Obtenir un ami par son ID
-const get_friend = async (req, res) => {
-    const { id } = req.params;
-    const sql = 'SELECT * FROM FRIEND WHERE id_friend_receiver = ?';
-
-    connexion.query(sql, [id, id], (err, rows) => {
+// Obtenir les demandes d'amis qui sont pas accepter
+const get_friend_request = async (req, res) => {
+    const { id_friend_sender } = req.params;
+    const sql = 'SELECT * FROM FRIEND WHERE id_friend_receiver = ? AND date_time_friend_accepted IS NULL';
+    connexion.query(sql, [id_friend_sender], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection de l'ami" });
+        }
+        if (rows.length === 0) {
+            return res.status(200).json({ message: "Aucune demande accepter" });
         }
         res.status(200).json({ data: rows, message: "Sélectionné avec succès" });
     });
@@ -71,5 +92,6 @@ module.exports = {
     delete_friend,
     update_friend,
     get_all_friend,
-    get_friend
+    get_friend_accepted_request,
+    get_friend_request,
 };
