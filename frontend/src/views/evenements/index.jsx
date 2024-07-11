@@ -22,14 +22,21 @@ const Evenements = () => {
     fetchEvents();
   }, []);
 
+  const isEventOngoing = (event) => {
+    const now = new Date();
+    const start = new Date(event.date_time_debut_event);
+    const end = new Date(event.date_time_fin_event);
+    return now >= start && now <= end;
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="mt-20 mr-5 ml-5">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8 justify-start">Évènements à venir</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-8 justify-start">Évènements</h1>
           <div className="justify-end mb-4">
-            <button className=" justify-end mb-4 classic-button">
+            <button className="justify-end mb-4 classic-button">
               Créer un évènement
             </button>
           </div>
@@ -48,11 +55,17 @@ const Evenements = () => {
                   <p className="text-gray-600 mb-4">
                     {new Date(event.date_time_debut_event).toLocaleDateString()} - {new Date(event.date_time_fin_event).toLocaleDateString()}
                   </p>
+                  {event.status_event === "DATE EXPIRÉE" && (
+                    <span className="text-red-600 font-bold mb-2 block">Évènement fini</span>
+                  )}
+                  {isEventOngoing(event) && (
+                    <span className="text-green-600 font-bold mb-2 block">En cours</span>
+                  )}
                   <div className="flex items-center justify-between">
                     <span className="text-teal-600 font-bold">Max participants: {event.max_user}</span>
                     <div className="more-details">
-                        {/* onClick: if token in session storage, redirection a la page de l'event, sinon Utiliser routes axios.get_event*/}
-                    → Plus d'informations
+                      {/* onClick: if token in session storage, redirection a la page de l'event, sinon Utiliser routes axios.get_event */}
+                      → Plus d'informations
                     </div>
                   </div>
                 </div>
