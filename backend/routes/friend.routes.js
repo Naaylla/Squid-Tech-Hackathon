@@ -7,7 +7,7 @@ router_friend.get('/:id_friend_sender', get_all_friend)
 // pour afficher toutes les demande d'amis accepter
 router_friend.get('/accepted/:id_friend_sender', get_friend_accepted_request)
 // pour afficher toutes les demande d'amis qui n'ont pas été accepter
-router_friend.get('/accepted/:id_friend_sender', get_friend_request)
+router_friend.get('/pending/:id_friend_receiver', get_friend_request)
 // envoyer une demande d'amis 
 router_friend.post('/add', add_friend)
 // supprimer une demande d'amis 
