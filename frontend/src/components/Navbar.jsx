@@ -72,14 +72,13 @@ export default function Navbar() {
   return (
     <div>
       <div
-        className={`w-full flex fixed top-0 left-0 bg-teal-700 text-white justify-between items-center px-4 md:px-14 py-5 z-40 ${
-          showBorderBottom ? "border-b-2" : ""
-        }`}
+        className={`w-full flex fixed top-0 left-0 bg-teal-700 text-white justify-between items-center px-4 md:px-14 py-5 z-40 ${showBorderBottom ? "border-b-2" : ""
+          }`}
       >
         <img src="./Logo blue.svg" className="w-32 md:w-40" alt="Logo" />
 
         <div className="flex items-center md:hidden">
-        
+
           <button onClick={() => setMenuOpen(!menuOpen)}>
             <svg
               className="w-8 h-8 text-white"
@@ -99,9 +98,8 @@ export default function Navbar() {
         </div>
 
         <div
-          className={`flex-col md:flex md:flex-row md:items-center font-semibold gap-4 md:gap-20 mr-5 ${
-            menuOpen ? "flex" : "hidden"
-          }`}
+          className={`flex-col md:flex md:flex-row md:items-center font-semibold gap-4 md:gap-20 mr-5 ${menuOpen ? "flex" : "hidden"
+            }`}
         >
           <m.button
             whileHover={{ scale: 1.05 }}
