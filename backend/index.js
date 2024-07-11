@@ -164,7 +164,7 @@ app.use('/publication', router_publication)
 // routes des publications partager par l'utilisateur
 app.use('/shared/user/publications', router_user_publi)
 // routes des utlisateurs 
-app.use('/users', router_user)
+app.use('/user', router_user)
 // Middleware pour la gestion des routes 404
 app.use('/*', async (req, res, next) => {
     res.status(404).json({ message: 'Route not Found' });
