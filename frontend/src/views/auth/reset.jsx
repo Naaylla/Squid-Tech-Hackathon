@@ -14,7 +14,7 @@ export default function Reset() {
                 </p>
                 <ResetPasswordForm>
                 </ResetPasswordForm>
-                <Link to="/login" className="text-black text-sm font-semibold text-base hover:underline">
+                <Link to="/login" className="text-black font-semibold text-base hover:underline">
                     Retour à la connexion.
                 </Link>
             </div>

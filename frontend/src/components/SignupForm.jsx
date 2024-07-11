@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import ReCAPTCHA from 'react-google-recaptcha';
+import axios from 'axios';
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -19,11 +18,6 @@ function SignupForm() {
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
-    const [captchaValue, setCaptchaValue] = useState(null);
-
-    const handleCaptchaChange = (value) => {
-        setCaptchaValue(value);
-    };
 
     // Email format validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
