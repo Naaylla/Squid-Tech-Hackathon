@@ -7,7 +7,7 @@ const login = async (req, res) => {
     const { username, email, telephone, password, recaptchaToken } = req.body;
 
     // Vérifier les entrées
-    if (!username || !email || !telephone) {
+    if (!username && !email && !telephone) {
         return res.status(400).json({ message: 'Veuillez fournir un nom d’utilisateur, un email ou un téléphone.' });
     }
     if (!password) {
@@ -57,8 +57,10 @@ const login = async (req, res) => {
                                 return res.status(500).json({ message: "Erreur d'authentification.", err });
                             }
                             res.status(200).json({ token: Token, user: userWithoutSensitiveInfo, message: user.username_user + " est connecté." });
+                            res.status(200).json({ success: true, message: "Login successful" });
                         })
                     }
+                    
                 })
 
             });
