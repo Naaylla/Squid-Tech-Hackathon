@@ -5,22 +5,22 @@ import ecoventureLogo from "../../assets/ecoventura.png";
 import CustomButton from "../../components/UI/CustomButton";
 import StarsRating from "../../components/UI/StarsRating";
 import Hands from "../../assets/handholdingseed.png";
-
+import "../../index.css";
 
 export default function Home() {
     return (
         <div className="flex flex-col w-screen h-screen">
-            <div className="w-full h-8 bg-[#021d49] flex items-center justify-center">
+            <div className="w-full h-8 bg-[#021d49] flex items-center justify-center z-30">
                 <p className="text-center text-xs font-bold text-white">Ta première app super ecolo !</p>
             </div>
-            <div className="w-full h-16 bg-white flex justify-between items-center lg:px-16 md:px-16 px-8">
+            <div className="w-full h-16 bg-white flex justify-between items-center lg:px-16 md:px-16 px-8 z-20">
                 <h1 className="text-4xl font-bold text-darkBlue">Tree</h1>
                 <div>
                     <CustomButton href="/login" text="Se connecter" imageSrc={treeIcon} />
                 </div>
             </div>
-            <div className="relative w-full h-4/6 bg-[#f1f0f6] py-12 space-y-4 flex flex-col lg:px-16 md:px-16 px-8">
-                <img src={Hands} className="absolute h-full object-contain top-0 right-40" />
+            <div className="relative w-full h-4/6 bg-[#f1f0f6] py-12 space-y-4 flex flex-col lg:px-16 md:px-16 px-8 z-10">
+                <img src={Hands} className="absolute h-full object-contain -top-10 right-40 animate-wiggle-slow z-0" />
 
                 <h1 className="text-4xl text-darkBlue font-bold leading-tight ">
                     Protégeons notre planète,<br className="hidden md:inline" /> dès aujourd'hui.
@@ -42,7 +42,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="bg-[#021d49] flex-grow flex items-center justify-center">
+            <div className="bg-[#021d49] flex-grow flex items-center justify-center z-10">
                 <div className="flex flex-row items-center space-x-20">
                     <img src={onepercentPlanetLogo} alt="" className="h-15 object-contain" />
                     <img src={ecoventureLogo} className="h-16 object-contain" />

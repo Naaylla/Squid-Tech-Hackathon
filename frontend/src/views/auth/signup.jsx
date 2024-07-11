@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import Form from "../../components/SignupForm";
 import { TERipple } from "tw-elements-react";
-import plantIcon from "../../assets/plant.svg";
-
 import treeIcon from "../../assets/tree.svg";
 
 

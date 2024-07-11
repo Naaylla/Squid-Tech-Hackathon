@@ -5,6 +5,7 @@ import Home from "./views/home";
 import Signup from "./views/auth/signup";
 import Login from "./views/auth/login";
 import Reset from "./views/auth/reset";
+import Verify from "./views/auth/verify"
 import Profile from "./views/profile";
 import Evenements from "./views/evenements";
 import Dashboard from "./views/dashboard";
@@ -21,6 +22,7 @@ const Routers = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset-password" element={<Reset />} />
+          <Route path="/verify-code" element={<Verify />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/evenements" element={<Evenements />} />
           <Route path="/dashboard" element={<Dashboard />} />

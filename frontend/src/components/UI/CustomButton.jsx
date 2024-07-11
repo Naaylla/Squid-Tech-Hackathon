@@ -21,7 +21,7 @@ const CustomButton = ({ text, imageSrc, href, className }) => {
         </a>
     ) : (
         <button
-            type="button"
+            type="submit"
             className={combinedClasses}
         >
             {buttonContent}
