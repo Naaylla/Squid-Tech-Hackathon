@@ -35,9 +35,8 @@ export default function Navbar() {
   return (
     <div>
       <div
-        className={`w-full flex fixed top-0 left-0 bg-teal-700 text-white justify-between items-center px-4 md:px-14 py-5 z-40 ${
-          showBorderBottom ? "border-b-2" : ""
-        }`}
+        className={`w-full flex fixed top-0 left-0 bg-teal-700 text-white justify-between items-center px-4 md:px-14 py-5 z-40 ${showBorderBottom ? "border-b-2" : ""
+          }`}
       >
         <img src="./Logo blue.svg" className="w-32 md:w-40" alt="Logo" />
 
@@ -49,8 +48,8 @@ export default function Navbar() {
                   className="w-10 h-8 text-white dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -145,13 +144,12 @@ export default function Navbar() {
             Évènements
           </m.button>
           <m.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 1.5 }}
+            whileTap={{ scale: 1.3 }}
             onClick={() => {
               window.location.href = "/dashboard";
             }}
           >
-            S.I.E
+            Suivi de l’impact écologique
           </m.button>
 
           <div className="relative w-auto">
@@ -202,27 +200,27 @@ export default function Navbar() {
             </m.button>
             {/* Notification icon*/}
             <div className="relative">
-  <m.button onClick={handleNotificationClick}>
-    <svg
-      className="w-10 h-8 text-white dark:text-white"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"
-      />
-    </svg>
-  </m.button>
-  {notificationsOpen && <NotificationsToggle />}
-</div>
+              <m.button onClick={handleNotificationClick}>
+                <svg
+                  className="w-10 h-8 text-white dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"
+                  />
+                </svg>
+              </m.button>
+              {notificationsOpen && <NotificationsToggle />}
+            </div>
 
             {/* Profile icon*/}
             <m.button
