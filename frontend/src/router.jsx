@@ -6,7 +6,7 @@ import Signup from "./views/auth/signup";
 import Login from "./views/auth/login";
 import Reset from "./views/auth/reset";
 import Verify from "./views/auth/verify"
-import Home from "./views/home/index"
+import Home from "./views/landing/index"
 import Profile from "./views/profile";
 import Evenements from "./views/evenements";
 import Dashboard from "./views/dashboard";
