@@ -64,9 +64,6 @@ const update_user = async (req, res) => {
             hashedPassword = await bcrypt.hash(password, 10);
         }
 
-        // Log pour débogage
-        console.log(`Password received for user update: ${password}`);
-        console.log(`Hashed password for user update: ${hashedPassword}`);
 
         const sql = 'UPDATE USER SET firstname_user = ?, lastname_user = ?, email_user = ?, username_user = ?, password_user = ?, pays_user = ?, commune_user = ?, telephone_user = ?, gender_user = ?, date_naissance_user = ? WHERE id_user = ?';
         const values = [firstname, lastname, email, username, hashedPassword, pays, commune, telephone, gender, date_naissance, id];

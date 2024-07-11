@@ -162,7 +162,7 @@ app.use('/publication/likes', router_publication_like)
 // routes des publications
 app.use('/publication', router_publication)
 // routes des publications partager par l'utilisateur
-app.use('/shared/user/publications', router_user_publi)
+app.use('/share', router_user_publi)
 // routes des utlisateurs 
 app.use('/user', router_user)
 // Middleware pour la gestion des routes 404
