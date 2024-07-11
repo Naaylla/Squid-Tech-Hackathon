@@ -1,12 +1,12 @@
 const { add_commentaire_like, get_commentaire_like, get_all_commentaire_like, delete_commentaire_like, update_commentaire_like } = require('../controllers/commentaire_like.controller')
 
-const router_commentaire_routes = require('express').Router()
+const router_commentaire_like = require('express').Router()
 
-router_commentaire_routes.get('/', get_all_commentaire_like)
-router_commentaire_routes.get('/:id', get_commentaire_like)
-router_commentaire_routes.post('/add', add_commentaire_like)
-router_commentaire_routes.delete('/delete/:id', delete_commentaire_like)
-router_commentaire_routes.put('/update/:id', update_commentaire_like)
+router_commentaire_like.get('/', get_all_commentaire_like)
+router_commentaire_like.get('/:id_commentaire', get_commentaire_like)
+router_commentaire_like.post('/add', add_commentaire_like)
+router_commentaire_like.delete('/delete/:id_commentaire/:id_like', delete_commentaire_like)
+router_commentaire_like.put('/update/:id_commentaire/:id_like', update_commentaire_like)
 
 
-module.exports = router_commentaire_routes
+module.exports = router_commentaire_like

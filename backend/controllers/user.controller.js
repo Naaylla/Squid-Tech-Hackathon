@@ -1,18 +1,36 @@
+const bcrypt = require('bcrypt')
 const connexion = require("../utils/db");
 
 // Ajouter un utilisateur
-const add_user = async (req, res) => {
-    const { firstname_user, lastname_user, email_user, number_user, username_user, password_user, pays_user, commune_user, telephone_user } = req.body;
-    const sql = 'INSERT INTO USER (firstname_user, lastname_user, email_user, number_user, username_user, password_user, pays_user, commune_user, telephone_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const values = [firstname_user, lastname_user, email_user, number_user, username_user, password_user, pays_user, commune_user, telephone_user];
 
-    connexion.query(sql, values, (err, result) => {
-        if (err) {
-            return res.status(500).json({ data: err, message: "Erreur lors de l'ajout de l'utilisateur" });
+const add_user = async (req, res) => {
+    const { firstname, lastname, email, username, password, pays, commune, telephone, gender, date_naissance } = req.body;
+
+    try {
+        // Vérifier que le mot de passe est bien présent dans req.body
+        if (!password) {
+            return res.status(400).json({ message: "Le champ 'password' est requis." });
         }
-        res.status(200).json({ data: result, message: "Ajout avec succès" });
-    });
+
+        // Hasher le mot de passe
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 est le nombre de tours de salage
+
+        const sql = 'INSERT INTO USER (firstname_user, lastname_user, email_user, username_user, password_user, pays_user, commune_user, telephone_user, gender_user, date_naissance_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const values = [firstname, lastname, email, username, hashedPassword, pays, commune, telephone, gender, date_naissance];
+
+        connexion.query(sql, values, (err, rows) => {
+            if (err) {
+                return res.status(500).json({ message: "Erreur lors de l'ajout de l'utilisateur, vérifiez les données que vous avez entrées. Elles sont peut-être existantes ou incohérentes.", error: err });
+            }
+            const userWithoutPassword = { ...req.body };
+            delete userWithoutPassword.password;
+            res.status(200).json({ data: userWithoutPassword, message: "Ajout avec succès" });
+        });
+    } catch (err) {
+        res.status(500).json({ data: err, message: "Erreur lors du hachage du mot de passe" });
+    }
 };
+
 
 // Supprimer un utilisateur par son ID
 const delete_user = async (req, res) => {
@@ -27,19 +45,36 @@ const delete_user = async (req, res) => {
     });
 };
 
-// Mettre à jour un utilisateur
-const update_user = async (req, res) => {
-    const { id_user, firstname_user, lastname_user, email_user, number_user, username_user, password_user, pays_user, commune_user, telephone_user } = req.body;
-    const sql = 'UPDATE USER SET firstname_user = ?, lastname_user = ?, email_user = ?, number_user = ?, username_user = ?, password_user = ?, pays_user = ?, commune_user = ?, telephone_user = ? WHERE id_user = ?';
-    const values = [firstname_user, lastname_user, email_user, number_user, username_user, password_user, pays_user, commune_user, telephone_user, id_user];
 
-    connexion.query(sql, values, (err, result) => {
-        if (err) {
-            return res.status(500).json({ data: err, message: "Erreur lors de la modification de l'utilisateur" });
+
+
+const update_user = async (req, res) => {
+    const { id } = req.params;
+    const { firstname, lastname, email, username, password, pays, commune, telephone, gender, date_naissance } = req.body;
+
+    try {
+        let hashedPassword = password;
+
+        // Vérifier que le mot de passe est bien présent dans req.body
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
         }
-        res.status(200).json({ data: result, message: "Modifié avec succès" });
-    });
+
+
+        const sql = 'UPDATE USER SET firstname_user = ?, lastname_user = ?, email_user = ?, username_user = ?, password_user = ?, pays_user = ?, commune_user = ?, telephone_user = ?, gender_user = ?, date_naissance_user = ? WHERE id_user = ?';
+        const values = [firstname, lastname, email, username, hashedPassword, pays, commune, telephone, gender, date_naissance, id];
+
+        connexion.query(sql, values, (err, result) => {
+            if (err) {
+                return res.status(500).json({ data: err, message: "Erreur lors de la modification de l'utilisateur" });
+            }
+            res.status(200).json({ data: result, message: "Modifié avec succès" });
+        });
+    } catch (err) {
+        res.status(500).json({ data: err, message: "Erreur lors du hachage du mot de passe" });
+    }
 };
+
 
 // Obtenir tous les utilisateurs
 const get_all_user = async (req, res) => {

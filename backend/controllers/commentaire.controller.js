@@ -1,7 +1,5 @@
 const connexion = require("../utils/db");
 
-const connexion = require("../utils/db");
-
 const add_commentaire = async (req, res) => {
     const { text_commentaire, id_user, id_publication } = req.body;
     const sql = 'INSERT INTO COMMENTAIRE (text_commentaire, id_user, id_publication) VALUES (?, ?, ?)';

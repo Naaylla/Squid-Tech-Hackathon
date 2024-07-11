@@ -1,9 +1,9 @@
 const connexion = require("../utils/db");
 
 const add_event = async (req, res) => {
-    const { id_user_creator, date_time_debut_event, date_time_fin_event, title_event, status_event, max_user } = req.body;
-    const sql = 'INSERT INTO EVENT (id_user_creator, date_time_debut_event, date_time_fin_event, title_event, status_event, max_user) VALUES (?, ?, ?, ?, ?, ?)';
-    const values = [id_user_creator, date_time_debut_event, date_time_fin_event, title_event, status_event, max_user];
+    const { id_user_creator, date_time_debut_event, date_time_fin_event, title_event, max_user, description_event, adresse_event } = req.body;
+    const sql = 'INSERT INTO EVENT (id_user_creator, date_time_debut_event, date_time_fin_event, title_event,  max_user , description_event , adresse_event) VALUES ( ?,?,?, ?, ?, ?, ?)';
+    const values = [id_user_creator, date_time_debut_event, date_time_fin_event, title_event, max_user, description_event, adresse_event];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -16,10 +16,10 @@ const add_event = async (req, res) => {
 
 
 const delete_event = async (req, res) => {
-    const { id } = req.params;
+    const { id_event } = req.params;
     const sql = 'DELETE FROM EVENT WHERE id_event = ?';
 
-    connexion.query(sql, [id], (err, result) => {
+    connexion.query(sql, [id_event], (err, result) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la suppression de l'événement" });
         }
@@ -30,10 +30,10 @@ const delete_event = async (req, res) => {
 
 
 const update_event = async (req, res) => {
-    const { id } = req.params;
+    const { id_event } = req.params;
     const { id_user_creator, date_time_debut_event, date_time_fin_event, title_event, status_event, max_user } = req.body;
     const sql = 'UPDATE EVENT SET id_user_creator = ?, date_time_debut_event = ?, date_time_fin_event = ?, title_event = ?, status_event = ?, max_user = ? WHERE id_event = ?';
-    const values = [id_user_creator, date_time_debut_event, date_time_fin_event, title_event, status_event, max_user, id];
+    const values = [id_user_creator, date_time_debut_event, date_time_fin_event, title_event, status_event, max_user, id_event];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -56,10 +56,10 @@ const get_all_event = async (req, res) => {
 
 
 const get_event = async (req, res) => {
-    const { id } = req.params;
+    const { id_event } = req.params;
     const sql = 'SELECT * FROM EVENT WHERE id_event = ?';
 
-    connexion.query(sql, [id], (err, rows) => {
+    connexion.query(sql, [id_event], (err, rows) => {
         if (err) {
             return res.status(500).json({ data: err, message: "Erreur lors de la sélection de l'événement" });
         }

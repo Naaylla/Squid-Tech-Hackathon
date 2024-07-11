@@ -1,9 +1,34 @@
 import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion as m } from "framer-motion";
+import NotificationsToggle from "./NotificationsToggle";
 import NotificationsToggle from "./NotificationsToggle";
 
 export default function Navbar() {
   const [showBorderBottom, setShowBorderBottom] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  const handleNotificationClick = () => {
+    setNotificationsOpen(!notificationsOpen);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowBorderBottom(true);
+      } else {
+        setShowBorderBottom(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -227,6 +252,44 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {menuOpen && (
+        <div className="flex flex-col items-center bg-teal-700 text-white py-4 z-30 w-full fixed top-16 left-0 md:hidden">
+          <m.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              scrollTo("Home");
+              setMenuOpen(false);
+            }}
+            className="py-2"
+          >
+            Accueil
+          </m.button>
+          <m.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              window.location.href = "/evenements";
+              setMenuOpen(false);
+            }}
+            className="py-2"
+          >
+            Évènements
+          </m.button>
+          <m.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.5 }}
+            onClick={() => {
+              window.location.href = "/dashboard";
+              setMenuOpen(false);
+            }}
+            className="py-2"
+          >
+            S.I.E
+          </m.button>
+        </div>
+      )}
 
       {menuOpen && (
         <div className="flex flex-col items-center bg-teal-700 text-white py-4 z-30 w-full fixed top-16 left-0 md:hidden">

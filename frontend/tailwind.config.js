@@ -4,9 +4,20 @@ module.exports = {
     "./public/index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'darkBlue': '#091f4d',
+      },
+      width: {
+        'customWidth': '400px',
+      },
+      borderColor: {
+        'BlueBorder': '#091f4d',
+      },
+    },
   },
   plugins: [
     require('daisyui'),
   ],
 }
+

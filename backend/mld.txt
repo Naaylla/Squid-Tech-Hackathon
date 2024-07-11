@@ -1,3 +1,4 @@
+------------ MLD ( MODEL LOGIQUE DE DONNEE )
 
 . user ( id_user , nom_user , prenom_user , date_naissance , date_inscription_user , pays_user , commune_user , telephone_user , status_user , role_user ) 
 . friend ( #id_user_sender , #id_user_receiver , date_send_request ) 
@@ -22,6 +23,8 @@
 
 
 
+---------------- RULES
+
 // declencheur pour verifier si l'utilisateur est bloquée si oui l'utilisateur ne peut pas etre ajouter a une
 discussion ou l'utilisateur qui l'a bloquer participe et 
 ne peut pas voir la publication de l'utilisateur qui l'a bloquer
@@ -42,7 +45,16 @@ d'utilisateur et si le nombre d'utilisateur egale au maximum mettre complet sino
 ne pas ajouter d'utilisateur dans la table event_user
 // declencheur qui verifier le type de fichier afin d'eviter les attaques reverse shell et injection 
 de code malveillant
+// AJOUT CONTRAINT d'unicité dans la table user 
 //X declencheur pour verifier les données de l'impact
+//X fonction pour calcul de statistique de l'impact
 //X Fonction pour calculer le nombre de Commentaire d'une publication 
 //X Fonction pour calculer le nombre de Like d'une publication ou d'un commentaire 
 //X Fonction pour calculer le score de l'utlisateur d'apres les évenements
+//X ajout de la clause ON UPDATE 
+//X modification getter list d'amis afin de selectionner tout les listes d'amis 
+//X ajouter la table des badges pour calculer le score de l'utilisateur
+//X ajouter un boolean pour voir si le compte est confirmer ou pas
+//X ajouter une verification par email ou par telephone pour confirmer le compte et update la colonne status_user a disconnected ou connected
+//X mettre la colonne status_user par default a unconfirmed 
+//X mettre un declencheur pour voir si le compte est confirmer pour qu'il puissent se connecter  

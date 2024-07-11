@@ -2,9 +2,9 @@ const connexion = require("../utils/db");
 
 // Ajouter une activité
 const add_activite = async (req, res) => {
-    const { description_activite } = req.body;
-    const sql = 'INSERT INTO ACTIVITE (description_activite) VALUES (?)';
-    const values = [description_activite];
+    const { description_activite, date_debut_activite, heure_debut_activite } = req.body;
+    const sql = 'INSERT INTO ACTIVITE (description_activite, date_debut_activite, heure_debut_activite) VALUES (?, ?, ?)';
+    const values = [description_activite, date_debut_activite, heure_debut_activite];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -13,6 +13,7 @@ const add_activite = async (req, res) => {
         res.status(200).json({ data: result, message: "Ajout avec succès" });
     });
 };
+
 
 // Supprimer une activité
 const delete_activite = async (req, res) => {
@@ -30,9 +31,9 @@ const delete_activite = async (req, res) => {
 // Mettre à jour une activité
 const update_activite = async (req, res) => {
     const { id } = req.params;
-    const { description_activite } = req.body;
-    const sql = 'UPDATE ACTIVITE SET description_activite = ? WHERE id_activite = ?';
-    const values = [description_activite, id];
+    const { description_activite, date_debut_activite, heure_debut_activite } = req.body;
+    const sql = 'UPDATE ACTIVITE SET description_activite = ?, date_debut_activite = ?, heure_debut_activite = ? WHERE id_activite = ?';
+    const values = [description_activite, date_debut_activite, heure_debut_activite, id];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
@@ -41,6 +42,7 @@ const update_activite = async (req, res) => {
         res.status(200).json({ data: result, message: "Modifié avec succès" });
     });
 };
+
 
 // Obtenir toutes les activités
 const get_all_activite = async (req, res) => {
