@@ -6,7 +6,7 @@ import Signup from "./views/auth/signup";
 import Login from "./views/auth/login";
 import Reset from "./views/auth/reset";
 import Verify from "./views/auth/verify"
-import Home from "./views/landing/index"
+import Home from "./views/home/index"
 import Profile from "./views/profile";
 import Evenements from "./views/evenements";
 import Dashboard from "./views/dashboard";
@@ -28,6 +28,8 @@ const Routers = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/evenements" element={<Evenements />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/landing" element={<LandingPage/>} />
+          
         </Routes>
       </CSSTransition>
     </TransitionGroup>
