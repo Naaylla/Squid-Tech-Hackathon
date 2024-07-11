@@ -27,12 +27,11 @@ const delete_event_user = async (req, res) => {
     });
 };
 
-// Mettre à jour les détails d'un utilisateur dans un événement
+// Mettre à jour un utilisateur dans un événement
 const update_event_user = async (req, res) => {
     const { id_event, id_user } = req.params;
-    const { /* ajoutez ici les champs à mettre à jour si nécessaire */ } = req.body;
-    const sql = 'UPDATE EVENT_USER SET /* listez les champs à mettre à jour ici */ WHERE id_event = ? AND id_user = ?';
-    const values = [/* listez les valeurs correspondantes ici */, id_event, id_user];
+    const sql = 'UPDATE EVENT_USER SET id_user = ? , id_event = ? WHERE id_event = ? AND id_user = ?';
+    const values = [id_user, id_event, id_event, id_user];
 
     connexion.query(sql, values, (err, result) => {
         if (err) {
