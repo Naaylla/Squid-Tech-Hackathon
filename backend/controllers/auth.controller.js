@@ -50,6 +50,15 @@ const login = async (req, res) => {
 
                     // Générer un token JWT avec les données utilisateur (sans email et mot de passe)
                     const Token = jwt.sign(userWithoutSensitiveInfo, `${process.env.JWT_SECRET_KEY}`);
+                    if (res.status === 200) {
+                        const SQL = `UPDATE TABLE USER SET status_user = active where id_user = ${userWithoutSensitiveInfo.id_user}`
+                        connexion.query(SQL, async (err, result) => {
+                            if (err) {
+                                return res.status(500).json({ message: "Erreur d'authentification.", err });
+                            }
+                            res.status(200).json({ message: 'L\' utilisateur est connecter' })
+                        })
+                    }
                     res.status(200).json({ token: Token, user: userWithoutSensitiveInfo, message: user.username_user + " est connecté." });
                 })
 
@@ -59,5 +68,8 @@ const login = async (req, res) => {
         return res.status(500).json({ message: "Une erreur s'est produite lors de la vérification reCAPTCHA.", err });
     }
 };
+
+
+
 
 module.exports = login;

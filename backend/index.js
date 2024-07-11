@@ -28,10 +28,35 @@ const router_event = require('./routes/event.routes')
 const router_file_message = require('./routes/file_message.routes')
 const router_file = require('./routes/file.routes')
 const router_auth = require('./routes/auth.routes')
+const passport = require('passport')
+const passportSetup = require('./utils/passport')
+const session = require('express-session');
+
+
 //
 app.use(bodyParser.json())
 //
 app.use(bodyParser.urlencoded({ extended: true }))
+
+
+
+
+
+
+app.use(express.json())
+
+app.use(session({
+    name: "session",
+    secret: `${process.env.SESSION_SECRET}`, // Changez cela par une chaîne de caractères secrète unique
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Définissez à true si vous utilisez HTTPS
+}));
+
+// OAuth2.0
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 
 
@@ -40,7 +65,6 @@ const allowedOrigins = [
     'http://localhost:5173',
     process.env.BASE_URL
 ];
-
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -57,14 +81,6 @@ app.use(cors({
     credentials: true
 }));
 
-
-app.use(express.json())
-
-
-
-
-
-
 // Connexion a la base de donnée
 connexion.connect((err) => {
     if (err) {
@@ -78,6 +94,8 @@ connexion.connect((err) => {
 
 // Server mis à l'écoute
 
+
+// Créer le serveur HTTPS
 app.listen(process.env.PORT, (error) => {
     if (error) {
         return console.log('Erreur lors du demarrage du server');
@@ -85,16 +103,13 @@ app.listen(process.env.PORT, (error) => {
     console.log('Demarrage du serveur sur le port : ' + process.env.PORT || 8080);
 })
 
-
-
-
 // ROUTES 
 
 
 
 /**
  *  FAST DOCUMENTATION
- * How endpoint run ?
+ *  How endpoints run ?
  * 
  * id_id1 = premier mot apres 'router_' que l'on trouve dans les variables des endpoints
  * id_id2 = deuxiemme mot apres 'router_' que l'on trouve dans les variables des endpoints
@@ -119,9 +134,9 @@ app.use('/chat/user', router_chat_user)
 // routes des discussions
 app.use('/chat', router_chat)
 // routes des likes d'un commentaire
-app.use('/comment/likes', router_commentaire_like)
+app.use('/commentaire/likes', router_commentaire_like)
 // routes des commentaires
-app.use('/comment', router_commmentaire)
+app.use('/commentaire', router_commmentaire)
 // routes des activités d'un evenement
 app.use('/event/activities', router_event_activite)
 // routes des utilisateurs participant a un evenement
@@ -137,7 +152,7 @@ app.use('/friend', router_friend)
 // routes des impacts
 app.use('/impact', router_impact)
 // routes des likes
-app.use('/likes', router_like)
+app.use('/like', router_like)
 // routes des messages
 app.use('/message', router_message)
 // routes des fichiers d'une publication
@@ -147,9 +162,9 @@ app.use('/publication/likes', router_publication_like)
 // routes des publications
 app.use('/publication', router_publication)
 // routes des publications partager par l'utilisateur
-app.use('/shared/user/publications', router_user_publi)
+app.use('/share', router_user_publi)
 // routes des utlisateurs 
-app.use('/users', router_user)
+app.use('/user', router_user)
 // Middleware pour la gestion des routes 404
 app.use('/*', async (req, res, next) => {
     res.status(404).json({ message: 'Route not Found' });

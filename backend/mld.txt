@@ -51,7 +51,6 @@ de code malveillant
 //X Fonction pour calculer le nombre de Commentaire d'une publication 
 //X Fonction pour calculer le nombre de Like d'une publication ou d'un commentaire 
 //X Fonction pour calculer le score de l'utlisateur d'apres les évenements
-//X optimisation du code en supprimant les controllers inutilisables 'utilisation du ON DELETE CASCADE sur mysql'
 //X ajout de la clause ON UPDATE 
 //X modification getter list d'amis afin de selectionner tout les listes d'amis 
 //X ajouter la table des badges pour calculer le score de l'utilisateur
