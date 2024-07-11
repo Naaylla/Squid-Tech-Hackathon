@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-
+import ReCAPTCHA from 'react-google-recaptcha';
+import api from '../api';
 function LoginForm() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
-
+    const [captchaValue, setCaptchaValue] = useState(null);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'email') setEmail(value);
         if (name === 'password') setPassword(value);
+    };
+    const handleCaptchaChange = (value) => {
+        setCaptchaValue(value);
     };
 
     async function submit(e) {
@@ -20,11 +24,13 @@ function LoginForm() {
         setSubmitted(true);
 
         try {
-            const response = await axios.post("http://localhost:5000/auth/signup", {
+            const response=
+            api.post('/auth/login', {
                 email: email,
                 password: password,
+                recaptchaToken: captchaValue
             });
-
+            
             if (response.data.success) {
                 setErrorMessage('');
                 setTimeout(() => {
@@ -73,7 +79,11 @@ function LoginForm() {
                         <p className="text-red-500 text-bold text-sm flex-shrink-0">{errorMessage}</p>
                     )}
                 </div>
-
+                <ReCAPTCHA
+                    sitekey="6LcG_woqAAAAAKbNYsIw3-QtnbW3aZnTN5n6XOSW"
+                    onChange={handleCaptchaChange}
+                    className="mt-4"
+                />
                 <button
                     type="submit"
                     className={`py-2 w-full mt-4 border border-2 border-BlueBorder text-darkBlue rounded bg-white hover:bg-[#021d49] cursor-pointer hover:text-white transition ease-in duration-300 ${submitted ? 'opacity-50 pointer-events-none' : ''}`}

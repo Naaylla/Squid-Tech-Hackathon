@@ -56,10 +56,11 @@ const login = async (req, res) => {
                             if (err) {
                                 return res.status(500).json({ message: "Erreur d'authentification.", err });
                             }
-                            res.status(200).json({ message: 'L\' utilisateur est connecter' })
+                            res.status(200).json({ token: Token, user: userWithoutSensitiveInfo, message: user.username_user + " est connecté." });
+                            res.status(200).json({ success: true, message: "Login successful" });
                         })
                     }
-                    res.status(200).json({ token: Token, user: userWithoutSensitiveInfo, message: user.username_user + " est connecté." });
+                    
                 })
 
             });
