@@ -7,3 +7,41 @@ body {
   background: #ffffff;
   font-family: 'Inter';
 }
+
+.page-enter {
+  opacity: 0;
+}
+
+.page-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in-out;
+  /* Adjust timing function as needed */
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+  /* Adjust timing function as needed */
+}
+
+@layer utilities {
+  .animate-wiggle-slow {
+    animation: wiggle 4s cubic-bezier(0.5, 0.15, 0.25, 1) infinite;
+  }
+
+  @keyframes wiggle {
+
+    0%,
+    100% {
+      transform: rotate(-1deg);
+    }
+
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+}

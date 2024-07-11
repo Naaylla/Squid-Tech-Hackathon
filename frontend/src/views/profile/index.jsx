@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormUser from "../../components/FormUser";
+import FormUser from "../../components/UserForm";
 import Navbar from "../../components/Navbar";
 import PostsToggle from "../../components/PostsToggle"; // Import the PostsToggle component
 
