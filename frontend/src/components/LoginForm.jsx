@@ -96,4 +96,4 @@ function LoginForm() {
     );
 }
 
-export default Form;
+export default LoginForm;
