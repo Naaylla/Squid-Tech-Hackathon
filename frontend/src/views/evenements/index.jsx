@@ -2,13 +2,18 @@
 
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import Chat from "../../components/Chat";
 import EventToggle from "../../components/EventToggle"; // Import EventToggle component
 
 const Evenements = () => {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
+        const ss_user_id = sessionStorage.getItem("ss_user_id");
+        setUserId(Number(ss_user_id));
+
         const fetchEvents = async () => {
             try {
                 const response = await fetch("http://localhost:8000/event");
@@ -36,7 +41,10 @@ const Evenements = () => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <Navbar />
+            <div className="border">
+                <Navbar />
+            </div>
+            <Chat></Chat>
             <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mt-20 mr-5 ml-5">
                     <div className="grid grid-cols-2 gap-4">
@@ -75,7 +83,7 @@ const Evenements = () => {
 
             {/* Render EventToggle if selectedEvent is not null */}
             {selectedEvent && (
-                <EventToggle event={selectedEvent} onClose={handleCloseToggle} />
+                <EventToggle event={selectedEvent} onClose={handleCloseToggle} userId={userId} />
             )}
         </div>
     );

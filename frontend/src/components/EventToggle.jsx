@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 
-const EventToggle = ({ event, onClose }) => {
+const EventToggle = ({ event, onClose, userId }) => {
     const toggleRef = useRef(null);
 
     // Function to handle clicks outside the toggle
@@ -27,13 +27,23 @@ const EventToggle = ({ event, onClose }) => {
         <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div ref={toggleRef} className="bg-teal-700 p-8 w-full rounded-lg border-2 border-teal-700 max-w-3xl relative">
                 <h2 className="text-3xl text-white font-bold mb-4">{event.title_event}</h2>
-                <p className="text-gray-200 mb-4">
-                    Début: {new Date(event.date_time_debut_event).toLocaleDateString()}<br />
-                    Fin: {new Date(event.date_time_fin_event).toLocaleDateString()}
-                </p>
-                <p className="text-gray-200 mb-4">Max participants: {event.max_user}</p>
-                <p className="text-gray-200 mb-4">{event.description_event}</p>
-                <p className="text-gray-200 mb-4">{event.adresse_event}</p>
+                <div className="m-2 p-8 bg-white border-2 border-teal-700 overflow-y-auto rounded-lg" style={{ maxHeight: "65vh" }}>
+                    <div className="space-y-4">
+                        <p className="text-gray-800 mb-4">Description : <p className="text-black">{event.description_event}</p></p>
+                        <p className="text-gray-800 mb-4">Adresse :<p className="text-black">{event.adresse_event}</p></p>
+                        <p className="text-black mb-4">
+                            <p className="text-gray-800">Date de début:</p> {new Date(event.date_time_debut_event).toLocaleDateString()}<br />
+                            <p className="text-gray-800">Date de fin:</p> {new Date(event.date_time_fin_event).toLocaleDateString()}
+                        </p>
+                        <p className="text-teal-700 mb-4">Max participants: {event.max_user}</p>
+                    </div>
+                    <div className="mt-5 right-4">
+                    {event.id_user_creator === userId ? (
+                        <button className="bg-teal-100 text-teal-800 py-2 px-4 rounded" disabled>Vous êtes l'organisateur</button>
+                    ) : (
+                        <button className="classic-button">Participer</button>
+                    )}
+                </div></div>
                 <button
                     className="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-teal-700 text-white hover:bg-teal-600"
                     onClick={onClose}

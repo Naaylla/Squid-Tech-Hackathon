@@ -198,6 +198,7 @@ required
           onChange={handleInputChange}
           className="field-content"
           required
+          disabled
         >
           <option value="">-- Sélectionner --</option>
           <option value="homme">Homme</option>

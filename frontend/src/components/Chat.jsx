@@ -8,11 +8,13 @@ export default function Chat() {
   };
 
   return (
-    <div className='w-[100vw] h-[100vh] fixed p-16 flex justify-end items-end'>
+    <div>
       {/* Chat Popup */}
-      <div className='z-30'>
       <div
-        className={`fixed bottom-3 right-2 w-96 h-[80vh] bg-white shadow-lg rounded-lg p-4 overflow-hidden transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed bottom-3 right-2 w-96 h-[80vh] bg-white shadow-lg rounded-lg p-4 overflow-hidden transform transition-transform duration-300 ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        style={{ zIndex: isOpen ? 1001 : 1000 }}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Discussions</h2>
@@ -46,31 +48,30 @@ export default function Chat() {
           <div className="w-6 h-6 border-4 border-t-transparent border-gray-400 rounded-full animate-spin"></div>
         </div>
       </div>
-      </div>
       {/* Chat Button */}
-      <div className=' fixed bottom-4 right-4'>
-      <div
-        className='bg-teal-800 hover:bg-teal-700 flex justify-center items-center w-20 h-20 rounded-full cursor-pointer'
-        onClick={toggleChat}
-      >
-        <svg
-                className="w-10 h-10 text-white dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
-                />
-              </svg>
-      </div>
+      <div className="fixed bottom-4 right-4" style={{ zIndex: isOpen ? 1000 : 1001 }}>
+        <div
+          className="bg-teal-800 hover:bg-teal-700 flex justify-center items-center w-20 h-20 rounded-full cursor-pointer"
+          onClick={toggleChat}
+        >
+          <svg
+            className="w-10 h-10 text-white dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );
