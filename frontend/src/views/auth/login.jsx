@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import Form from "../../components/LoginForm";
+import LoginForm from "../../components/LoginForm";
 import { TERipple } from "tw-elements-react";
 import treeIcon from "../../assets/tree.svg";
 import "../../index.css"
@@ -17,7 +17,7 @@ export default function Login() {
                         S’inscrire
                     </Link>
                 </p>
-                <Form />
+                <LoginForm />
                 <p className="text-xs py-3"><a href="/reset-password">Mot de passe oublié ?</a></p>
                 <div className="my-4 w-full flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
                     <p className="mx-4 mb-0 text-xs text-center">

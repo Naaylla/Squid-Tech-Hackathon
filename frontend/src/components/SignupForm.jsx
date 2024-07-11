@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from 'react-google-recaptcha';
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -9,6 +10,11 @@ function SignupForm() {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [captchaValue, setCaptchaValue] = useState(null);
+
+    const handleCaptchaChange = (value) => {
+        setCaptchaValue(value);
+    };
 
     // Email format validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,6 +35,7 @@ function SignupForm() {
                 username: username,
                 email: email,
                 password: password,
+                recaptchaToken: captchaValue
             });
 
             if (response.data.success) {
@@ -85,24 +92,22 @@ function SignupForm() {
                     />
                 </div>
 
-                <div className="text-red-500 text-bold text-sm mt-1 mb-2">
-                    {submitted && !emailRegex.test(email) && (
-                        <p>Veuillez entrer une adresse email valide.</p>
-                    )}
-                    {errorMessage && !submitted && (
-                        <p>{errorMessage}</p>
-                    )}
-                </div>
-
-                <div className='h-4 flex items-center justify-center'>
+                <div className='h-4 mt-1 flex items-center justify-center'>
                     {errorMessage && (
                         <p className="text-red-500 text-bold text-sm flex-shrink-0">{errorMessage}</p>
                     )}
                 </div>
 
+                <ReCAPTCHA
+                    sitekey="6LcG_woqAAAAAKbNYsIw3-QtnbW3aZnTN5n6XOSW"
+                    onChange={handleCaptchaChange}
+                    className="mt-4"
+                />
+
                 <button
                     type="submit"
-                    className={`py-2 w-full mt-4 border border-2 border-BlueBorder text-darkBlue rounded bg-white hover:bg-[#021d49] cursor-pointer hover:text-white transition ease-in duration-300 ${submitted ? 'opacity-50 pointer-events-none' : ''}`}
+                    className={`py-2 w-full mt-4 border border-2 border-BlueBorder text-darkBlue rounded bg-white hover:bg-[#021d49] cursor-pointer hover:text-white transition ease-in duration-300 ${submitted || !captchaValue ? 'opacity-50 pointer-events-none' : ''}`}
+                    disabled={submitted || !captchaValue}
                 >
                     {submitted ? 'Inscription en cours...' : 'S\'inscrire'}
                 </button>
