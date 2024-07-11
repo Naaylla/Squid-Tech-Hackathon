@@ -10,6 +10,7 @@ module.exports = {
       },
       width: {
         'customWidth': '400px',
+        'customWidth2': '600px',
       },
       borderColor: {
         'BlueBorder': '#091f4d',
@@ -20,4 +21,3 @@ module.exports = {
     require('daisyui'),
   ],
 }
-
