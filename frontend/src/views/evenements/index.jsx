@@ -1,6 +1,5 @@
-// Evenements.js
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import Navbar from "../../components/Navbar";
 import Chat from "../../components/Chat";
 import EventToggle from "../../components/EventToggle"; // Import EventToggle component
@@ -9,6 +8,7 @@ const Evenements = () => {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [userId, setUserId] = useState(null);
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     useEffect(() => {
         const ss_user_id = sessionStorage.getItem("ss_user_id");
@@ -39,6 +39,10 @@ const Evenements = () => {
         setSelectedEvent(null);
     };
 
+    const handleCreateEventClick = () => {
+        navigate('/nouvel_evenement'); // Redirect to the new event creation page
+    };
+
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="border">
@@ -53,7 +57,7 @@ const Evenements = () => {
 
                         {/* Right column for button */}
                         <div className="flex justify-end mb-4">
-                            <button className="classic-button">
+                            <button className="classic-button" onClick={handleCreateEventClick}>
                                 Créer un évènement
                             </button>
                         </div>

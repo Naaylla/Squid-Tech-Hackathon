@@ -129,10 +129,19 @@ const Profile = () => {
                     <div className="mx-8">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-0 w-full">
                             <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
-                                <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
-                                    Badges
-                                </span>
-                                {/* Display badges or relevant user details */}
+                            <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+    Badges
+</span>
+{/* Display badges or relevant user details */}
+<div className="flex items-center justify-between mt-4 border-b">
+    <div className="text-black text-sm">Super Contributeur</div>
+    <button className="bg-teal-500 text-white text-sm px-3 py-1 m-5 rounded-lg">Obtenu</button>
+</div>
+<div className="flex items-center justify-between mt-4 border-b">
+    <div className="text-black text-sm">Amoureux de la nature</div>
+    <button className="bg-teal-500 text-white text-sm px-3 py-1 m-5 rounded-lg">Obtenu</button>
+</div>
+
                             </div>
 
                             <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">

@@ -20,13 +20,20 @@ const NewEvent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const id_user_creator = sessionStorage.getItem('ss_user_id');
+        
+        const eventData = {
+            ...formData,
+            id_user_creator
+        };
+
         try {
             const response = await fetch('http://localhost:8000/event/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(eventData),
             });
 
             if (response.ok) {
@@ -47,6 +54,9 @@ const NewEvent = () => {
             <Chat />
             <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mt-20 mr-5 ml-5">
+                <h1 className="text-3xl font-bold text-teal-800 mb-8">Créer un évènement</h1>
+                <p className="text-black m-10">Vous avez envie de créer votre propre évènement ? Voici votre chance de le faire ! Remplissez ce formulaire et c'est parti !</p>
+                
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 m-20">
                         <div className="field-set">
                             <label htmlFor="title_event">Nom de l'évènement</label>
@@ -73,7 +83,7 @@ const NewEvent = () => {
                             />
                         </div>
                         <div className="field-set">
-                            <label htmlFor="date_time_fin_event">Fin de l'évènement </label>
+                            <label htmlFor="date_time_fin_event">Fin de l'évènement</label>
                             <input
                                 type="datetime-local"
                                 name="date_time_fin_event"
@@ -96,7 +106,7 @@ const NewEvent = () => {
                             ></textarea>
                         </div>
                         <div className="field-set">
-                            <label htmlFor="adresse_event">Addresse</label>
+                            <label htmlFor="adresse_event">Adresse</label>
                             <input
                                 type="text"
                                 name="adresse_event"
@@ -108,7 +118,7 @@ const NewEvent = () => {
                             />
                         </div>
                         <div className="field-set">
-                            <label htmlFor="max_user">Maximum des  participants</label>
+                            <label htmlFor="max_user">Maximum des participants</label>
                             <input
                                 type="number"
                                 name="max_user"
@@ -120,10 +130,9 @@ const NewEvent = () => {
                             />
                         </div>
                         
-                        
-                            <button type="submit" className="classic-button w-full py-2">
-                                Submit
-                            </button>
+                        <button type="submit" className="classic-button w-full py-2">
+                            Créer l'évenement
+                        </button>
                         
                     </form>
                 </div>
