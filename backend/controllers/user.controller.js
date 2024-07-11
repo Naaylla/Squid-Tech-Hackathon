@@ -49,19 +49,27 @@ const delete_user = async (req, res) => {
     });
 };
 
-// Mettre à jour un utilisateur
+
+
+
 const update_user = async (req, res) => {
-    const { id_user, firstname_user, lastname_user, email_user, username_user, password_user, pays_user, commune_user, telephone_user, gender_user, date_naissance_user } = req.body;
+    const { id } = req.params;
+    const { firstname, lastname, email, username, password, pays, commune, telephone, gender, date_naissance } = req.body;
 
     try {
-        // Vérifier si le mot de passe est fourni pour le hasher
-        let hashedPassword = password_user;
-        if (password_user) {
-            hashedPassword = await bcrypt.hash(password_user, 10);
+        let hashedPassword = password;
+
+        // Vérifier que le mot de passe est bien présent dans req.body
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10);
         }
 
+        // Log pour débogage
+        console.log(`Password received for user update: ${password}`);
+        console.log(`Hashed password for user update: ${hashedPassword}`);
+
         const sql = 'UPDATE USER SET firstname_user = ?, lastname_user = ?, email_user = ?, username_user = ?, password_user = ?, pays_user = ?, commune_user = ?, telephone_user = ?, gender_user = ?, date_naissance_user = ? WHERE id_user = ?';
-        const values = [firstname_user, lastname_user, email_user, username_user, hashedPassword, pays_user, commune_user, telephone_user, gender_user, date_naissance_user, id_user];
+        const values = [firstname, lastname, email, username, hashedPassword, pays, commune, telephone, gender, date_naissance, id];
 
         connexion.query(sql, values, (err, result) => {
             if (err) {
