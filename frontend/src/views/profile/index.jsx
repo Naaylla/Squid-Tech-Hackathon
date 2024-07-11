@@ -3,7 +3,6 @@ import FormUser from "../../components/UserForm";
 import Navbar from "../../components/Navbar";
 import PostsToggle from "../../components/PostsToggle";
 import axios from "axios";
-import "../../index.css";
 import Chat from "../../components/Chat";
 
 const Profile = () => {
@@ -101,29 +100,6 @@ const Profile = () => {
         return new Date(isoDate).toLocaleDateString("fr-FR", options);
     };
 
-    const handleFileUpload = async (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        try {
-            const formData = new FormData();
-            formData.append("file", file);
-
-            // Example endpoint for uploading the file
-            const uploadResponse = await axios.post("http://localhost:8000/upload", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            });
-
-            console.log("File uploaded successfully:", uploadResponse.data);
-            // Optionally, update user data or perform any other actions upon successful upload
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            // Handle error as needed
-        }
-    };
-
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="border">
@@ -133,61 +109,13 @@ const Profile = () => {
             <div className="flex flex-col items-start justify-center min-h-screen mx-auto p-4 w-full xl:w-2/3">
                 <div className="mt-20 mr-5 ml-5">
                     {/* Profile Header */}
-                    <div className="w-full mb-6 relative">
+                    <div className="w-full mb-6">
                         {/* Cover pic */}
-                        <div className="bg-teal-900 h-32 w-full -mb-8 rounded-lg shadow-md">
-                            {/* Upload button for cover pic */}
-                            <label
-                                htmlFor="coverPicUpload"
-                                className="absolute right-4 bottom-4 bg-white rounded-full p-2 cursor-pointer"
-                            >
-                                <svg
-                                    className="w-6 h-6 text-teal-800"
-                                    fill="none"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path d="M12 4v16m8-8H4"></path>
-                                </svg>
-                                <input
-                                    id="coverPicUpload"
-                                    type="file"
-                                    className="hidden"
-                                    onChange={handleFileUpload}
-                                />
-                            </label>
-                        </div>
+                        <div className="bg-teal-900 h-32 w-full -mb-8 rounded-lg shadow-md"></div>
                         {/* Profile picture */}
-                        <div className="flex items-center z-10 grid grid-rows-2 grid-flow-col mt-4">
-                            <div className="h-20 w-20 bg-teal-100 rounded-full shadow-md ml-8 relative">
-                                {/* Upload button for profile pic */}
-                                <label
-                                    htmlFor="profilePicUpload"
-                                    className="absolute right-0 bottom-0 bg-white rounded-full p-2 cursor-pointer"
-                                >
-                                    <svg
-                                        className="w-6 h-6 text-teal-800"
-                                        fill="none"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path d="M12 4v16m8-8H4"></path>
-                                    </svg>
-                                    <input
-                                        id="profilePicUpload"
-                                        type="file"
-                                        className="hidden"
-                                        onChange={handleFileUpload}
-                                    />
-                                </label>
-                            </div>
-                            <div className="mt-5 ml-4">
+                        <div className="flex items-center z-10 grid grid-rows-2 grid-flow-col">
+                            <div className="h-20 w-20 bg-teal-100 rounded-full shadow-md ml-8"></div>
+                            <div className="mt-5">
                                 {/* User info */}
                                 <div className="font-bold text-xl text-black">
                                     {userData.firstName} {userData.lastName.charAt(0)}.
@@ -200,18 +128,24 @@ const Profile = () => {
                     {/* Badges, contributions, and posts */}
                     <div className="mx-8">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-0 w-full">
-                            <div className="profile-box">
-                                <span className="profile-box-title">Badges</span>
+                            <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
+                                <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+                                    Badges
+                                </span>
                                 {/* Display badges or relevant user details */}
                             </div>
 
-                            <div className="profile-box">
-                                <span className="profile-box-title">Contribution</span>
+                            <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
+                                <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+                                    Contribution
+                                </span>
                                 {/* Display contributions or relevant user details */}
                             </div>
 
-                            <div className="profile-box">
-                                <span className="profile-box-title">Mes posts</span>
+                            <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
+                                <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+                                    Mes posts
+                                </span>
                                 {getLastThreePosts().map((publication) => (
                                     <ul key={publication.id_publication}>
                                         <li className="mb-2">
@@ -228,7 +162,7 @@ const Profile = () => {
                                 ))}
                                 <div className="flex justify-end">
                                     {publications.length > 3 && (
-                                        <div className="more-details" onClick={toggleShowMorePosts}>
+                                        <div className="text-teal-600 hover:text-teal-700 cursor-pointer" onClick={toggleShowMorePosts}>
                                             → Tous vos posts
                                         </div>
                                     )}
@@ -238,8 +172,8 @@ const Profile = () => {
                     </div>
 
                     {/* Personal information with FormUser */}
-                    <div className="w-full bg-white overflow-hidden p-2 flex flex-col items-start space-y-8 mt-4">
-                        <span className="font-bold text-teal-800 border-b border-teal-800 border-gray-500 inline-block">
+                    <div className="bg-white overflow-hidden p-2 w-full flex flex-col items-start space-y-8 mt-4">
+                        <span className="font-bold text-teal-800 border-b border-teal-800 border-gray-500 inline-block p-2">
                             Informations personnelles
                         </span>
                         <FormUser initialData={userData} updateUserData={setUserData} />
@@ -251,7 +185,6 @@ const Profile = () => {
                     <PostsToggle posts={publications.slice().reverse()} onClose={closePostsToggle} />
                 )}
             </div>
-            
         </div>
     );
 };
