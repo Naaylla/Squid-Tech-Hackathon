@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -15,9 +16,15 @@ function SignupForm() {
         phone: '',
         gender: '',
         birthDate: '',
+        recaptchaToken: '', // Include recaptchaToken in formData
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [captchaValue, setCaptchaValue] = useState(null);
+
+    const handleCaptchaChange = (value) => {
+        setCaptchaValue(value);
+    };
 
     // Email format validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,7 +44,7 @@ function SignupForm() {
         try {
             const response = await axios.post("http://localhost:5000/auth/signup", {
                 ...formData,
-                recaptchaToken: captchaValue,
+                recaptchaToken: captchaValue, // Include recaptchaToken in form data
             });
 
             if (response.data.success) {
@@ -59,9 +66,9 @@ function SignupForm() {
 
     return (
         <div className="flex flex-col items-center w-full max-w-2xl p-4 bg-white rounded-lg">
-            <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full flex">
-                <h2 className="col-span-1 md:col-span-2 text-2xl text-black font-semibold mt-4">Informations de Compte</h2>
-                <div className="col-span-1 md:col-span-2">
+            <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                <h2 className="col-span-2 text-2xl text-black font-semibold mt-4">Informations de Compte</h2>
+                <div className="col-span-2">
                     <input
                         type="text"
                         name="username"
@@ -73,7 +80,7 @@ function SignupForm() {
                     />
                 </div>
 
-                <div className="col-span-1 md:col-span-2">
+                <div className="col-span-2">
                     <input
                         type="email"
                         name="email"
@@ -85,7 +92,7 @@ function SignupForm() {
                     />
                 </div>
 
-                <div className="col-span-1 md:col-span-2">
+                <div className="col-span-2">
                     <input
                         type="password"
                         name="password"
@@ -97,7 +104,7 @@ function SignupForm() {
                     />
                 </div>
 
-                <h2 className="col-span-1 md:col-span-2 text-2xl font-semibold text-black  mt-4">Informations Personnelles</h2>
+                <h2 className="col-span-2 text-2xl font-semibold text-black mt-4">Informations Personnelles</h2>
                 <div>
                     <input
                         type="text"
@@ -145,8 +152,8 @@ function SignupForm() {
                     </select>
                 </div>
 
-                <h2 className="col-span-1 md:col-span-2 text-2xl font-semibold   text-black  mt-4">Informations de Contact</h2>
-                <div className="col-span-1 md:col-span-2">
+                <h2 className="col-span-2 text-2xl font-semibold text-black mt-4">Informations de Contact</h2>
+                <div className="col-span-2">
                     <input
                         type="tel"
                         name="phone"
@@ -158,7 +165,7 @@ function SignupForm() {
                     />
                 </div>
 
-                <h2 className="col-span-1 md:col-span-2 text-2xl font-semibold mt-4  text-black ">Localisation</h2>
+                <h2 className="col-span-2 text-2xl font-semibold mt-4 text-black">Localisation</h2>
                 <div>
                     <input
                         type="text"
@@ -182,7 +189,7 @@ function SignupForm() {
                     />
                 </div>
 
-                <div className="col-span-1 md:col-span-2 mt-4 flex justify-center">
+                <div className="col-span-2 mt-4 flex justify-center">
                     <ReCAPTCHA
                         sitekey="6LcG_woqAAAAAKbNYsIw3-QtnbW3aZnTN5n6XOSW"
                         onChange={handleCaptchaChange}
@@ -190,7 +197,7 @@ function SignupForm() {
                     />
                 </div>
 
-                <div className="col-span-1 md:col-span-2 mt-4">
+                <div className="col-span-2 mt-4">
                     <button
                         type="submit"
                         className={`py-2 w-full border border-2 border-blue-500 text-blue-500 rounded-md bg-white hover:bg-blue-500 hover:text-white transition ease-in duration-300 ${submitted || !captchaValue ? 'opacity-50 pointer-events-none' : ''}`}
@@ -201,8 +208,8 @@ function SignupForm() {
                 </div>
 
                 {errorMessage && (
-                    <div className="col-span-1 md:col-span-2 mt-2">
-                        <p className="text-red-500 text-bold text-sm">{errorMessage}</p>
+                    <div className="col-span-2 mt-2">
+                        <p className="text-red-500 font-bold text-sm">{errorMessage}</p>
                     </div>
                 )}
             </form>
