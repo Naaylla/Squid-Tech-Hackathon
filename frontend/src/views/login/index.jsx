@@ -4,6 +4,11 @@ import Form from "../../components/FormLogin";
 import { TERipple } from "tw-elements-react";
 
 export default function Login() {
+
+    const google = () => {
+        window.open("http://localhost:8000/auth/google", "_self");
+    };
+
     return (
         <div className="flex w-full min-h-screen items-center justify-center">
             <div className="lg:w-2/5 md:w-96 w-96 mt-12 mb-12 rounded-3xl shadow-md bg-white overflow-hidden p-8 flex flex-col items-center justify-center space-y-8 border-2 border-neutral-400 border-opacity-50">
@@ -56,7 +61,9 @@ export default function Login() {
                             Continuez avec Twitter
                         </a>
                     </TERipple>
-                    <TERipple rippleColor="light" className="w-full">
+                    <button onClick={google}>google</button>
+                    <TERipple rippleColor="light"
+                        onClick={google} className="w-full">
                         <a
                             className="mb-3 flex w-full items-center justify-center rounded bg-white px-7 pb-2.5 pt-3 text-center text-sm font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-gray-200 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-gray-200 focus:outline-none focus:ring-0 active:bg-gray-300 dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                             style={{ backgroundColor: "#ffffff", color: "#000000" }}

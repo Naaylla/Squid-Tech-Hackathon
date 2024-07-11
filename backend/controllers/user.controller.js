@@ -2,14 +2,24 @@ const bcrypt = require('bcrypt')
 const connexion = require("../utils/db");
 
 // Ajouter un utilisateur
+
 const add_user = async (req, res) => {
     const { firstname, lastname, email, username, password, pays, commune, telephone, gender, date_naissance } = req.body;
 
     try {
+        // Vérifier que le mot de passe est bien présent dans req.body
+        if (!password) {
+            return res.status(400).json({ message: "Le champ 'password' est requis." });
+        }
+
         // Hasher le mot de passe
         const hashedPassword = await bcrypt.hash(password, 10); // 10 est le nombre de tours de salage
 
-        const sql = 'INSERT INTO USER (firstname_user, lastname_user, email_user, username_user, password_user, pays_user, commune_user, telephone_user  , gender_user , date_naissance_user) VALUES (? ,? , ?, ?, ?, ?, ?, ?, ?, ?)';
+        // Log pour débogage
+        console.log(`Password received: ${password}`);
+        console.log(`Hashed password: ${hashedPassword}`);
+
+        const sql = 'INSERT INTO USER (firstname_user, lastname_user, email_user, username_user, password_user, pays_user, commune_user, telephone_user, gender_user, date_naissance_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         const values = [firstname, lastname, email, username, hashedPassword, pays, commune, telephone, gender, date_naissance];
 
         connexion.query(sql, values, (err, rows) => {
@@ -21,9 +31,10 @@ const add_user = async (req, res) => {
             res.status(200).json({ data: userWithoutPassword, message: "Ajout avec succès" });
         });
     } catch (err) {
-        res.status(500).json({ data: err, message: "Erreur" });
+        res.status(500).json({ data: err, message: "Erreur lors du hachage du mot de passe" });
     }
 };
+
 
 // Supprimer un utilisateur par son ID
 const delete_user = async (req, res) => {

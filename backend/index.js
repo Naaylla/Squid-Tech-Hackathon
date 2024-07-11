@@ -109,7 +109,7 @@ app.listen(process.env.PORT, (error) => {
 
 /**
  *  FAST DOCUMENTATION
- * How endpoint run ?
+ *  How endpoints run ?
  * 
  * id_id1 = premier mot apres 'router_' que l'on trouve dans les variables des endpoints
  * id_id2 = deuxiemme mot apres 'router_' que l'on trouve dans les variables des endpoints
@@ -164,7 +164,7 @@ app.use('/publication', router_publication)
 // routes des publications partager par l'utilisateur
 app.use('/shared/user/publications', router_user_publi)
 // routes des utlisateurs 
-app.use('/users', router_user)
+app.use('/user', router_user)
 // Middleware pour la gestion des routes 404
 app.use('/*', async (req, res, next) => {
     res.status(404).json({ message: 'Route not Found' });

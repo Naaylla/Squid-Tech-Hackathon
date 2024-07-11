@@ -20,44 +20,56 @@ const login = async (req, res) => {
     try {
         // Vérifier le token reCAPTCHA
         const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
-        await axios.post(verificationURL);
+        await axios.post(verificationURL)
+            .then(() => {
 
-        // Requête SQL pour trouver l'utilisateur
-        const sql = 'SELECT * FROM user WHERE (username_user = ? OR email_user = ? OR telephone_user = ?)';
-        const values = [username, email, telephone];
 
-        connexion.query(sql, values, async (err, rows) => {
-            if (err) {
-                return res.status(500).json({ message: "Erreur d'authentification.", err });
-            }
+                // Requête SQL pour trouver l'utilisateur
+                const sql = 'SELECT * FROM user WHERE (username_user = ? OR email_user = ? OR telephone_user = ?)';
+                const values = [username, email, telephone];
 
-            if (rows.length <= 0) {
-                return res.status(401).json({ message: "Nom d'utilisateur, email, ou téléphone invalide." });
-            }
+                connexion.query(sql, values, async (err, rows) => {
+                    if (err) {
+                        return res.status(500).json({ message: "Erreur d'authentification.", err });
+                    }
 
-            const user = rows[0];
+                    if (rows.length <= 0) {
+                        return res.status(401).json({ message: "Nom d'utilisateur, email, ou téléphone invalide." });
+                    }
 
-            const passwordMatch = await bcrypt.compare(password, user.password_user);
+                    const user = rows[0];
 
-            if (!passwordMatch) {
-                return res.status(401).json({ message: "Mot de passe invalide." });
-            }
+                    const passwordMatch = await bcrypt.compare(password, user.password_user);
 
-            // Exclure l'email et le mot de passe de l'objet utilisateur
-            const { email_user, password_user, ...userWithoutSensitiveInfo } = user;
+                    if (!passwordMatch) {
+                        return res.status(401).json({ message: "Mot de passe invalide." });
+                    }
 
-            // Générer un token JWT avec les données utilisateur (sans email et mot de passe)
-            const token = jwt.sign(userWithoutSensitiveInfo, `${process.env.JWT_SECRET_KEY}`);
+                    // Exclure l'email et le mot de passe de l'objet utilisateur
+                    const { email_user, password_user, ...userWithoutSensitiveInfo } = user;
 
-            
+                    // Générer un token JWT avec les données utilisateur (sans email et mot de passe)
+                    const Token = jwt.sign(userWithoutSensitiveInfo, `${process.env.JWT_SECRET_KEY}`);
+                    if (res.status === 200) {
+                        const SQL = `UPDATE TABLE USER SET status_user = active where id_user = ${userWithoutSensitiveInfo.id_user}`
+                        connexion.query(SQL, async (err, result) => {
+                            if (err) {
+                                return res.status(500).json({ message: "Erreur d'authentification.", err });
+                            }
+                            res.status(200).json({ message: 'L\' utilisateur est connecter' })
+                        })
+                    }
+                    res.status(200).json({ token: Token, user: userWithoutSensitiveInfo, message: user.username_user + " est connecté." });
+                })
 
-            // Return JWT token and user info
-            res.status(200).json({ token, user: userWithoutSensitiveInfo, message: `${user.username_user} est connecté.` });
-        });
+            });
 
     } catch (err) {
         return res.status(500).json({ message: "Une erreur s'est produite lors de la vérification reCAPTCHA.", err });
     }
 };
+
+
+
 
 module.exports = login;
