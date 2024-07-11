@@ -10,6 +10,7 @@ import Home from "./views/home/index"
 import Profile from "./views/profile";
 import Evenements from "./views/evenements";
 import Dashboard from "./views/dashboard";
+import NewEvent from "./views/nouvel_evenement";
 import "./index.css";
 
 const Routers = () => {
@@ -28,7 +29,7 @@ const Routers = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/evenements" element={<Evenements />} />
           <Route path="/dashboard" element={<Dashboard />} />
-
+          <Route path="/nouvel_evenement" element={<NewEvent />} />
         </Routes>
       </CSSTransition>
     </TransitionGroup>

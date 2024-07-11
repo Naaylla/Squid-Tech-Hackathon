@@ -3,7 +3,7 @@ import FormUser from "../../components/UserForm";
 import Navbar from "../../components/Navbar";
 import PostsToggle from "../../components/PostsToggle";
 import axios from "axios";
-import "../../index.css";
+import Chat from "../../components/Chat";
 
 const Profile = () => {
     const [userData, setUserData] = useState({
@@ -25,7 +25,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const userId = sessionStorage.getItem("ss_id_user");
+                const userId = sessionStorage.getItem("ss_user_id");
                 if (!userId) {
                     throw new Error("User ID not found in sessionStorage");
                 }
@@ -36,6 +36,13 @@ const Profile = () => {
                     throw new Error("User data not found");
                 }
                 const userDataFromApi = userDataResponse.data.data[0]; // Assuming data is an array
+
+                // Format the birthDate to "yyyy-MM-dd"
+                const formattedBirthDate = new Date(userDataFromApi.date_naissance_user).toISOString().split("T")[0];
+
+                //Format the formattedBirthDate to "dd/MM/yyyy"
+                const finalFormattedBirthDate = formattedBirthDate.split('-').reverse().join('/');
+
                 setUserData({
                     firstName: userDataFromApi.firstname_user || "",
                     lastName: userDataFromApi.lastname_user || "",
@@ -45,7 +52,7 @@ const Profile = () => {
                     commune: userDataFromApi.commune_user || "",
                     phoneNumber: userDataFromApi.telephone_user || "",
                     gender: userDataFromApi.gender_user || "",
-                    birthDate: userDataFromApi.date_naissance_user || "",
+                    birthDate: finalFormattedBirthDate || "",
                     registrationDate: userDataFromApi.date_time_inscription_user || ""
                 });
 
@@ -98,6 +105,7 @@ const Profile = () => {
             <div className="border">
                 <Navbar />
             </div>
+            <Chat></Chat>
             <div className="flex flex-col items-start justify-center min-h-screen mx-auto p-4 w-full xl:w-2/3">
                 <div className="mt-20 mr-5 ml-5">
                     {/* Profile Header */}
@@ -120,18 +128,33 @@ const Profile = () => {
                     {/* Badges, contributions, and posts */}
                     <div className="mx-8">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-0 w-full">
-                            <div className="profile-box">
-                                <span className="profile-box-title">Badges</span>
-                                {/* Display badges or relevant user details */}
+                            <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
+                            <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+    Badges
+</span>
+{/* Display badges or relevant user details */}
+<div className="flex items-center justify-between mt-4 border-b">
+    <div className="text-black text-sm">Super Contributeur</div>
+    <button className="bg-teal-500 text-white text-sm px-3 py-1 m-5 rounded-lg">Obtenu</button>
+</div>
+<div className="flex items-center justify-between mt-4 border-b">
+    <div className="text-black text-sm">Amoureux de la nature</div>
+    <button className="bg-teal-500 text-white text-sm px-3 py-1 m-5 rounded-lg">Obtenu</button>
+</div>
+
                             </div>
 
-                            <div className="profile-box">
-                                <span className="profile-box-title">Contribution</span>
+                            <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
+                                <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+                                    Contribution
+                                </span>
                                 {/* Display contributions or relevant user details */}
                             </div>
 
-                            <div className="profile-box">
-                                <span className="profile-box-title">Mes posts</span>
+                            <div className="bg-white border border-gray-300 rounded-lg shadow-md p-4">
+                                <span className="font-semibold text-teal-800 block text-center border-b border-teal-800 pb-2">
+                                    Mes posts
+                                </span>
                                 {getLastThreePosts().map((publication) => (
                                     <ul key={publication.id_publication}>
                                         <li className="mb-2">
@@ -148,7 +171,7 @@ const Profile = () => {
                                 ))}
                                 <div className="flex justify-end">
                                     {publications.length > 3 && (
-                                        <div className="more-details" onClick={toggleShowMorePosts}>
+                                        <div className="text-teal-600 hover:text-teal-700 cursor-pointer" onClick={toggleShowMorePosts}>
                                             → Tous vos posts
                                         </div>
                                     )}
@@ -158,8 +181,8 @@ const Profile = () => {
                     </div>
 
                     {/* Personal information with FormUser */}
-                    <div className="w-full bg-white overflow-hidden p-2 flex flex-col items-start space-y-8 mt-4">
-                        <span className="font-bold text-teal-800 border-b border-teal-800 border-gray-500 inline-block">
+                    <div className="bg-white overflow-hidden p-2 w-full flex flex-col items-start space-y-8 mt-4">
+                        <span className="font-bold text-teal-800 border-b border-teal-800 border-gray-500 inline-block p-2">
                             Informations personnelles
                         </span>
                         <FormUser initialData={userData} updateUserData={setUserData} />

@@ -21,7 +21,7 @@ const NewEvent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const id_user_creator = sessionStorage.getItem('ss_user_id');
-        
+
         const eventData = {
             ...formData,
             id_user_creator
@@ -54,9 +54,9 @@ const NewEvent = () => {
             <Chat />
             <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mt-20 mr-5 ml-5">
-                <h1 className="text-3xl font-bold text-teal-800 mb-8">Créer un évènement</h1>
-                <p className="text-black m-10">Vous avez envie de créer votre propre évènement ? Voici votre chance de le faire ! Remplissez ce formulaire et c'est parti !</p>
-                
+                    <h1 className="text-3xl font-bold text-teal-800 mb-8">Créer un évènement</h1>
+                    <p className="text-black m-10">Vous avez envie de créer votre propre évènement ? Voici votre chance de le faire ! Remplissez ce formulaire et c'est parti !</p>
+
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 m-20">
                         <div className="field-set">
                             <label htmlFor="title_event">Nom de l'évènement</label>
@@ -129,11 +129,11 @@ const NewEvent = () => {
                                 required
                             />
                         </div>
-                        
+
                         <button type="submit" className="classic-button w-full py-2">
                             Créer l'évenement
                         </button>
-                        
+
                     </form>
                 </div>
             </div>

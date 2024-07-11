@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from 'react-google-recaptcha';
+import api from '../api';
 
-function Form() {
+function LoginForm() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [captchaValue, setCaptchaValue] = useState(null);
 
-    // Email format validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'email') setEmail(value);
+        if (name === 'password') setPassword(value);
+    };
+
+    const handleCaptchaChange = (value) => {
+        console.log(value);
+        setCaptchaValue(value);
+    };
 
     async function submit(e) {
         e.preventDefault();
@@ -21,8 +32,12 @@ function Form() {
                 email: email,
                 password: password,
             });
+            console.log('response', response);
 
-            if (response.data.success) {
+            if (response.status === 200) {
+                setErrorMessage('');
+                const userId = response.data.user.id_user;
+                sessionStorage.setItem('ss_user_id', userId);
                 navigate("/home", { state: { id: email } });
             } else {
                 setErrorMessage(response.data.message || "Login failed");

@@ -10,7 +10,7 @@ const PostsToggle = ({ posts, onClose }) => {
                     className="absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full bg-teal-700 text-white hover:bg-teal-600"
                     onClick={onClose}
                 >
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                     </svg>
                 </button>
@@ -29,6 +29,7 @@ const PostsToggle = ({ posts, onClose }) => {
                 </div>
             </div>
         </div>
+
     );
 };
 
