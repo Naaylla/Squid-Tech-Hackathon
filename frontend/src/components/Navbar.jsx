@@ -85,7 +85,7 @@ export default function Navbar() {
       </div>
 
       <div className={`flex-col md:flex md:flex-row md:items-center font-semibold gap-4 md:gap-20 ${menuOpen ? "flex" : "hidden"}`}>
-        <m.button whileHover={{ scale: 1.05 }} onClick={() => { window.location.href = "/"; }}>Accueil</m.button>
+        <m.button whileHover={{ scale: 1.05 }} onClick={() => { window.location.href = "/home"; }}>Accueil</m.button>
         <m.button whileHover={{ scale: 1.05 }} onClick={() => { window.location.href = "/evenements"; }}>Évènements</m.button>
         <m.button whileHover={{ scale: 1.05 }} onClick={() => { window.location.href = "/dashboard"; }}>Suivi de l'Impact Ecologique</m.button>
 

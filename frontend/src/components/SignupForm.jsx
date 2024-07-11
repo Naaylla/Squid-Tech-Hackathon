@@ -26,7 +26,6 @@ function SignupForm() {
         setCaptchaValue(value);
     };
 
-    // Email format validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleInputChange = (e) => {
@@ -42,9 +41,9 @@ function SignupForm() {
         setSubmitted(true);
 
         try {
-            const response = await axios.post("http://localhost:5000/auth/signup", {
+            const response = await axios.post("http://localhost:5000/users/add", {
                 ...formData,
-                recaptchaToken: captchaValue, // Include recaptchaToken in form data
+                recaptchaToken: captchaValue,
             });
 
             if (response.data.success) {
@@ -105,51 +104,63 @@ function SignupForm() {
                 </div>
 
                 <h2 className="col-span-2 text-2xl font-semibold text-black mt-4">Informations Personnelles</h2>
-                <div>
-                    <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        placeholder="Prénom"
-                        className="py-2 px-4 w-full border-b border-gray-300 bg-white"
-                        required
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-2">
+                    <div className="flex flex-col">
+                        <label htmlFor="firstName" className="text-black mb-1">Prénom</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            value={formData.firstName}
+                            onChange={handleInputChange}
+                            placeholder="Prénom"
+                            className="py-2 px-4 w-full border-b border-gray-300 bg-white"
+                            required
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="lastName" className="text-black mb-1">Nom de famille</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                            name="lastName"
+                            value={formData.lastName}
+                            onChange={handleInputChange}
+                            placeholder="Nom de famille"
+                            className="py-2 px-4 w-full border-b border-gray-300 bg-white"
+                            required
+                        />
+                    </div>
                 </div>
-                <div>
-                    <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        placeholder="Nom de famille"
-                        className="py-2 px-4 w-full border-b border-gray-300 bg-white"
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="date"
-                        name="birthDate"
-                        value={formData.birthDate}
-                        onChange={handleInputChange}
-                        className="py-2 px-4 w-full border-b border-gray-300 bg-white"
-                        required
-                    />
-                </div>
-                <div>
-                    <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleInputChange}
-                        className="py-2 px-4 w-full border-b border-gray-300 bg-white"
-                        required
-                    >
-                        <option value="">Sélectionnez votre sexe</option>
-                        <option value="male">Homme</option>
-                        <option value="female">Femme</option>
-                        <option value="other">Autre</option>
-                    </select>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-2">
+                    <div>
+                        <label htmlFor="birthDate" className="text-black mb-1 block">Date de naissance</label>
+                        <input
+                            type="date"
+                            id="birthDate"
+                            name="birthDate"
+                            value={formData.birthDate}
+                            onChange={handleInputChange}
+                            className="py-2 px-4 w-full border-b border-gray-300 bg-white"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="gender" className="text-black mb-1 block">Sexe</label>
+                        <select
+                            id="gender"
+                            name="gender"
+                            value={formData.gender}
+                            onChange={handleInputChange}
+                            className="py-2 px-4 w-full border-b border-gray-300 bg-white"
+                            required
+                        >
+                            <option value="">Sélectionnez votre sexe</option>
+                            <option value="male">Homme</option>
+                            <option value="female">Femme</option>
+                        </select>
+                    </div>
                 </div>
 
                 <h2 className="col-span-2 text-2xl font-semibold text-black mt-4">Informations de Contact</h2>
@@ -166,27 +177,33 @@ function SignupForm() {
                 </div>
 
                 <h2 className="col-span-2 text-2xl font-semibold mt-4 text-black">Localisation</h2>
-                <div>
-                    <input
-                        type="text"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleInputChange}
-                        placeholder="Pays"
-                        className="py-2 px-4 w-full border-b border-gray-300 bg-white"
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        placeholder="Commune"
-                        className="py-2 px-4 w-full border-b border-gray-300 bg-white"
-                        required
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-2">
+                    <div className="flex flex-col">
+                        <label htmlFor="country" className="text-black mb-1">Pays</label>
+                        <input
+                            type="text"
+                            id="country"
+                            name="country"
+                            value={formData.country}
+                            onChange={handleInputChange}
+                            placeholder="Pays"
+                            className="py-2 px-4 w-full border-b border-gray-300 bg-white"
+                            required
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="city" className="text-black mb-1">Commune</label>
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleInputChange}
+                            placeholder="Commune"
+                            className="py-2 px-4 w-full border-b border-gray-300 bg-white"
+                            required
+                        />
+                    </div>
                 </div>
 
                 <div className="col-span-2 mt-4 flex justify-center">
