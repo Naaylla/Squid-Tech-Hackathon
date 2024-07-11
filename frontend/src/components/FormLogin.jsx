@@ -18,21 +18,30 @@ function Form() {
 
     async function submit(e) {
         e.preventDefault();
-
+    
         try {
             const response = await api.post("/auth/login", {
                 username: email,
                 password: password,
                 recaptchaToken: captchaValue
             });
+    
+            // Assuming the response contains user data with an id_user field
+            const { user } = response.data;
+            const userid = user.id_user;
+    
+            // Store user ID in sessionStorage
+            sessionStorage.setItem('ss_id_user', userid);
+    
             console.log(response);
             navigate("/home", { state: { id: email } });
-
+    
         } catch (e) {
             setErrorMessage(e.response.data.message);
-            console.log(e);
+            console.error(e);
         }
     }
+    
 
     return (
         <div className="flex flex-col items-center w-full">

@@ -3,7 +3,7 @@ import { motion as m } from "framer-motion";
 
 export default function NotificationsToggle() {
   return (
-    <div className="absolute right-0 top-full mt-2 bg-white shadow-md rounded-md p-2">
+    <div className="absolute right-0 top-full mt-2 bg-white shadow-md rounded-md p-2 z-30">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Notifications</h3>
         <button className="text-gray-500">
