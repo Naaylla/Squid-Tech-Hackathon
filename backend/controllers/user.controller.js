@@ -15,10 +15,6 @@ const add_user = async (req, res) => {
         // Hasher le mot de passe
         const hashedPassword = await bcrypt.hash(password, 10); // 10 est le nombre de tours de salage
 
-        // Log pour débogage
-        console.log(`Password received: ${password}`);
-        console.log(`Hashed password: ${hashedPassword}`);
-
         const sql = 'INSERT INTO USER (firstname_user, lastname_user, email_user, username_user, password_user, pays_user, commune_user, telephone_user, gender_user, date_naissance_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         const values = [firstname, lastname, email, username, hashedPassword, pays, commune, telephone, gender, date_naissance];
 
