@@ -11,7 +11,6 @@ import Profile from "./views/profile";
 import Evenements from "./views/evenements";
 import Dashboard from "./views/dashboard";
 import "./index.css";
-import FileUploadForm from "./views/file";
 
 const Routers = () => {
   const location = useLocation();
