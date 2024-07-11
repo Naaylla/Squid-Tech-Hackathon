@@ -72,11 +72,11 @@ const get_user_publication = async (req, res) => {
     const { id_user } = req.params;
     const sql = 'SELECT * FROM PUBLICATION WHERE id_user = ?';
 
-    connexion.query(sql, [id_publication], (err, rows) => {
+    connexion.query(sql, [id_user], (err, rows) => {
         if (err) {
-            return res.status(500).json({ data: err, message: "Erreur lors de la sélection de la publication" });
+            return res.status(500).json({ data: err, message: "Erreur lors de la sélection des publication" });
         }
-        res.status(200).json({ data: rows, message: "Sélectionné avec succès" });
+        res.status(200).json({ data: rows, message: "Publications sélectionné avec succès" });
     });
 };
 
