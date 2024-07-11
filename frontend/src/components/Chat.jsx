@@ -4,10 +4,10 @@ export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [conversations, setConversations] = useState([
-    { id: 1, header: 'Nayla', messages: [{ text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', sender: 'other' }], time: '10min' },
-    { id: 2, header: 'Leenah', messages: [{ text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', sender: 'other' }], time: '20min' },
-    { id: 3, header: 'Mehdi', messages: [{ text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', sender: 'other' }], time: '30min' },
-    { id: 4, header: 'Masked Gamers', messages: [{ text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', sender: 'other' }], time: '40min' },
+    { id: 1, header: 'Nayla', messages: [{  sender: 'other' }], time: '10min' },
+    { id: 2, header: 'Leenah', messages: [{  sender: 'other' }], time: '20min' },
+    { id: 3, header: 'Mehdi', messages: [{  sender: 'other' }], time: '30min' },
+    { id: 4, header: 'Masked Gamers', messages: [{ sender: 'other' }], time: '40min' },
   ]);
 
   const [messageInput, setMessageInput] = useState('');
@@ -47,7 +47,7 @@ export default function Chat() {
 
   return (
     <div className='w-[100vw] z-10 h-[100vh] fixed p-16 flex justify-end items-end'>
-     
+      {/* Chat Popup */}
       <div
         className={`fixed bottom-10 right-0 w-96 h-[80vh] bg-white shadow-lg rounded-lg p-4 overflow-hidden transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
@@ -96,7 +96,7 @@ export default function Chat() {
               />
             </div>
             <div className="overflow-y-auto h-full">
-          
+              {/* Chat Items */}
               {conversations.map((conversation) => (
                 <div
                   key={conversation.id}
@@ -120,7 +120,7 @@ export default function Chat() {
         )}
       </div>
 
-   
+      {/* Chat Button */}
       <div
         className='bg-black flex justify-center items-center w-20 h-20 rounded-full cursor-pointer'
         onClick={toggleChat}
